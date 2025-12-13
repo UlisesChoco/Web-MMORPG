@@ -1,0 +1,16 @@
+package com.chocolatada.auth.api.response;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/**
+* Clase interna para la respuesta de verificación.
+*/
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class VerificationResponse {
+    private boolean success;
+    private String message;
+}
