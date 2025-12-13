@@ -29,7 +29,7 @@ public class MailServiceImpl implements IMailService {
     @Override
     public void sendVerificationEmail(String email, String verificationLink) {
         String subject = "Verificación de correo electrónico - " + appName;
-        String body = "Bienvenido a " + appName + "!\n\n" +
+        String body = "¡Bienvenido a " + appName + "!\n\n" +
                 "Para completar tu registro, haz clic en el siguiente enlace:\n" +
                 verificationLink + "\n\n" +
                 "Este enlace expirará en 24 horas.\n\n" +
