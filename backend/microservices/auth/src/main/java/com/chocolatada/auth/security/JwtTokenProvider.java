@@ -10,9 +10,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
-/**
- * Servicio encargado de la generación, validación y firma de tokens JWT.
- */
 @Component
 public class JwtTokenProvider {
 
@@ -26,13 +23,6 @@ public class JwtTokenProvider {
     @Value("${jwt.secret}")
     private String jwtSecret;
 
-    /**
-     * Genera un token JWT firmado con la información del usuario para login.
-     *
-     * @param userId ID del usuario
-     * @param email  Email del usuario
-     * @return Token JWT firmado
-     */
     public String generateToken(Long userId, String email) {
         Algorithm algorithm = Algorithm.HMAC256(jwtSecret);
         
@@ -45,13 +35,6 @@ public class JwtTokenProvider {
                 .sign(algorithm);
     }
 
-    /**
-     * Genera un token JWT firmado para verificación de correo electrónico.
-     *
-     * @param userId ID del usuario
-     * @param email  Email del usuario
-     * @return Token JWT firmado para verificación
-     */
     public String generateVerificationToken(Long userId, String email) {
         Algorithm algorithm = Algorithm.HMAC256(jwtSecret);
         
@@ -64,13 +47,6 @@ public class JwtTokenProvider {
                 .sign(algorithm);
     }
 
-    /**
-     * Valida un token JWT de verificación de correo electrónico.
-     *
-     * @param token Token JWT a validar
-     * @return Información decodificada del token (userId y email)
-     * @throws JWTVerificationException si el token es inválido, expirado o no es de verificación
-     */
     public VerificationTokenData validateVerificationToken(String token) throws JWTVerificationException {
         try {
             Algorithm algorithm = Algorithm.HMAC256(jwtSecret);
@@ -79,13 +55,11 @@ public class JwtTokenProvider {
                     .build()
                     .verify(token);
 
-            // Verificar que sea un token de verificación
             String tokenType = decodedJWT.getClaim(CLAIM_TYPE).asString();
             if (!TOKEN_TYPE_VERIFICATION.equals(tokenType)) {
                 throw new JWTVerificationException("El token no es de tipo verificación");
             }
 
-            // Extraer información del token
             Long userId = decodedJWT.getClaim(CLAIM_USER_ID).asLong();
             String email = decodedJWT.getClaim(CLAIM_EMAIL).asString();
 

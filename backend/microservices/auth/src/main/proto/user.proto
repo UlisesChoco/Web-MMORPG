@@ -8,14 +8,12 @@ option java_outer_classname = "UserProto";
 
 import "google/protobuf/timestamp.proto";
 
-// Enum para el estado del usuario
 enum UserStatus {
   PENDING = 0;
   ACTIVE = 1;
   BANNED = 2;
 }
 
-// Mensaje User con los datos de la entidad
 message User {
   int64 id = 1;
   string email = 2;
@@ -24,30 +22,25 @@ message User {
   google.protobuf.Timestamp created_at = 5;
 }
 
-// Request para registrar un nuevo usuario
 message RegisterUserRequest {
   string email = 1;
   string password = 2;
 }
 
-// Response del registro de usuario
 message RegisterUserResponse {
   string message = 1;
 }
 
-// Request para login de usuario
 message LoginUserRequest {
   string email = 1;
   string password = 2;
 }
 
-// Response del login de usuario
 message LoginUserResponse {
   string message = 1;
   string jwt = 2;
 }
 
-// Servicio gRPC para autenticación de usuarios
 service UserService {
   rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
   rpc LoginUser(LoginUserRequest) returns (LoginUserResponse);

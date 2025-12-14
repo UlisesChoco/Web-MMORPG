@@ -10,9 +10,6 @@ import com.chocolatada.auth.service.mail.IMailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * Implementación del servicio de envío de correos electrónicos.
- */
 @Service
 @RequiredArgsConstructor
 @Slf4j

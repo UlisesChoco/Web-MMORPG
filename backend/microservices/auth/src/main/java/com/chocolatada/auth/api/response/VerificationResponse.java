@@ -4,9 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
-* Clase interna para la respuesta de verificación.
-*/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -1,8 +1,5 @@
 package com.chocolatada.auth.security;
 
-/**
- * Clase para encapsular la información del token de verificación.
-*/
 public class VerificationTokenData {
     public final Long userId;
     public final String email;
