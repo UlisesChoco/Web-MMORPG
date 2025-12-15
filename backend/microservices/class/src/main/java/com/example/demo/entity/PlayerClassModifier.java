@@ -6,7 +6,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -28,12 +27,29 @@ public class PlayerClassModifier {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "player_class_id", nullable = false)
     private PlayerClass playerClass;
 
     @Column(nullable = false)
-    private String key;
+    private float critRateModifier;
 
     @Column(nullable = false)
-    private float value;
+    private float critDamageModifier;
+
+    @Column(nullable = false)
+    private float hpModifier;
+
+    @Column(nullable = false)
+    private float atkModifier;
+
+    @Column(nullable = false)
+    private float defModifier;
+
+    @Column(nullable = false)
+    private float staminaModifier;
+
+    @Column(nullable = false)
+    private float accuracyModifier;
+
+    @Column(nullable = false)
+    private float evasionModifier;
 }
