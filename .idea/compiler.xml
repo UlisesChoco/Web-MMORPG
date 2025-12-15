@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Annotation profile for class" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+        </processorPath>
+        <module name="world" />
+        <module name="auth" />
+        <module name="combat" />
+        <module name="loot" />
+        <module name="inventory" />
+        <module name="class" />
+        <module name="player" />
+        <module name="tower" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="auth" options="-parameters" />
+      <module name="class" options="-parameters" />
+      <module name="combat" options="-parameters" />
+      <module name="inventory" options="-parameters" />
+      <module name="loot" options="-parameters" />
+      <module name="player" options="-parameters" />
+      <module name="tower" options="-parameters" />
+      <module name="world" options="-parameters" />
+    </option>
+  </component>
+</project>

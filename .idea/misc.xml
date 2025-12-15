@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/backend/microservices/auth/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/microservices/loot/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/microservices/class/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/microservices/tower/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/microservices/world/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/microservices/combat/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/microservices/player/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/microservices/inventory/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_22" default="true" project-jdk-name="22" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
