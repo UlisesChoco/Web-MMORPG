@@ -1,4 +1,80 @@
 package com.chocolatada.player.service.jpa.impl;
 
-public class PlayerServiceImpl {
+import com.chocolatada.player.dto.PlayerTopLevelDTO;
+import com.chocolatada.player.dto.PlayerUpdateDTO;
+import com.chocolatada.player.entity.Player;
+import com.chocolatada.player.exception.InvalidPlayerDataException;
+import com.chocolatada.player.mapper.PlayerMapper;
+import com.chocolatada.player.repository.PlayerRepository;
+import com.chocolatada.player.service.jpa.IPlayerService;
+import com.chocolatada.player.validator.PlayerValidator;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class PlayerServiceImpl implements IPlayerService {
+    private final PlayerRepository playerRepository;
+
+    @Override
+    public Player findById(Long id) throws InvalidPlayerDataException {
+        return playerRepository.findById(id).orElseThrow(() ->
+                new InvalidPlayerDataException("No existe un personaje con ID: " + id)
+        );
+    }
+
+    @Override
+    public Player findByUserId(Long userId) throws InvalidPlayerDataException {
+        return playerRepository.findByUserId(userId).orElseThrow(() ->
+                new InvalidPlayerDataException("No existe un personaje con UserID: " + userId)
+        );
+    }
+
+    @Override
+    public List<PlayerTopLevelDTO> findTopByLevel(Boolean isAlive, int limit) {
+        Pageable pageable = PageRequest.of(0, limit);
+
+        List<Player> players = playerRepository.findTopByLevel(isAlive, pageable);
+
+        return PlayerMapper.toPlayerTopLevelDTOs(players);
+    }
+
+    @Transactional
+    @Override
+    public Player update(Long id, PlayerUpdateDTO playerUpdateDTO) throws InvalidPlayerDataException {
+        Player player = findById(id);
+
+        PlayerValidator.validatePlayerUpdateDTO(playerUpdateDTO);
+
+        player = PlayerMapper.toPlayer(player, playerUpdateDTO);
+
+        return playerRepository.save(player);
+    }
+
+    @Transactional
+    @Override
+    public boolean deleteById(Long id) throws InvalidPlayerDataException {
+        if (!playerRepository.existsById(id))
+            throw new InvalidPlayerDataException("No existe un personaje con ID: " + id);
+
+        playerRepository.deleteById(id);
+
+        return true;
+    }
+
+    @Transactional
+    @Override
+    public boolean markPlayerAsDead(Long id) throws InvalidPlayerDataException {
+        if (!playerRepository.existsById(id))
+            throw new InvalidPlayerDataException("No existe un personaje con ID: " + id);
+
+        playerRepository.markPlayerAsDead(id);
+
+        return true;
+    }
 }
