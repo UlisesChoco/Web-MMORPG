@@ -35,7 +35,7 @@ public class MailServiceImpl implements IMailService {
                 "El equipo de " + appName;
 
         sendEmail(email, subject, body);
-        log.info("Correo de verificación enviado a: {}", email);
+        log.info("Correo de verificación enviado a: "+ email);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class MailServiceImpl implements IMailService {
                 "El equipo de " + appName;
 
         sendEmail(email, subject, body);
-        log.info("Notificación de login enviada a: {}", email);
+        log.info("Notificación de login enviada a: "+ email);
     }
 
     @Override
@@ -61,11 +61,11 @@ public class MailServiceImpl implements IMailService {
             message.setText(body);
 
             javaMailSender.send(message);
-            log.info("Correo enviado a: {} con asunto: {}", toEmail, subject);
+            log.info("Correo enviado a: "+ toEmail +" con asunto: "+ subject);
 
         } catch (Exception e) {
-            log.error("Error al enviar correo a: {}", toEmail, e);
-            throw new RuntimeException("Error al enviar correo a " + toEmail, e);
+            log.error("Error al enviar correo a: "+ toEmail, e);
+            throw new RuntimeException("Error al enviar correo a "+ toEmail, e);
         }
     }
 }

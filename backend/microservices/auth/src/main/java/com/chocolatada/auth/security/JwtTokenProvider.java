@@ -16,9 +16,9 @@ public class JwtTokenProvider {
     private static final String CLAIM_USER_ID = "userId";
     private static final String CLAIM_EMAIL = "email";
     private static final String CLAIM_TYPE = "type";
-    private static final String TOKEN_TYPE_LOGIN = "LOGIN";
-    private static final String TOKEN_TYPE_VERIFICATION = "VERIFICATION";
-    private static final long TOKEN_EXPIRATION_TIME = 86400000; // 24 horas en milisegundos
+    private static final String TOKEN_TYPE_LOGIN = "login";
+    private static final String TOKEN_TYPE_VERIFICATION = "verification";
+    private static final long TOKEN_EXPIRATION_TIME = 86400000;
 
     @Value("${jwt.secret}")
     private String jwtSecret;
@@ -56,15 +56,13 @@ public class JwtTokenProvider {
                     .verify(token);
 
             String tokenType = decodedJWT.getClaim(CLAIM_TYPE).asString();
-            if (!TOKEN_TYPE_VERIFICATION.equals(tokenType)) {
+            if (!TOKEN_TYPE_VERIFICATION.equals(tokenType))
                 throw new JWTVerificationException("El token no es de tipo verificación");
-            }
 
             Long userId = decodedJWT.getClaim(CLAIM_USER_ID).asLong();
             String email = decodedJWT.getClaim(CLAIM_EMAIL).asString();
 
             return new VerificationTokenData(userId, email);
-
         } catch (JWTVerificationException e) {
             throw new JWTVerificationException("Token de verificación inválido o expirado", e);
         }

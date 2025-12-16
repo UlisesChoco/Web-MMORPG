@@ -3,7 +3,7 @@ package com.chocolatada.auth.service.grpc;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.chocolatada.auth.entity.User;
+import com.chocolatada.auth.entity.UserEntity;
 import com.chocolatada.auth.exception.InvalidCredentialsException;
 import com.chocolatada.auth.exception.InvalidUserDataException;
 import com.chocolatada.auth.exception.UserAlreadyExistsException;
@@ -37,7 +37,7 @@ public class UserServiceGrpcImpl extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void registerUser(RegisterUserRequest request, StreamObserver<RegisterUserResponse> responseObserver) {
         try {
-            User newUser = userService.registerUser(request.getEmail(), request.getPassword());
+            UserEntity newUser = userService.registerUser(request.getEmail(), request.getPassword());
 
             String verificationToken = jwtTokenProvider.generateVerificationToken(
                 newUser.getId(), 
@@ -46,11 +46,16 @@ public class UserServiceGrpcImpl extends UserServiceGrpc.UserServiceImplBase {
 
             String verificationLink = verificationBaseUrl + "?token=" + verificationToken;
 
+            /*
+            lo coloco en un try catch aparte para no afectar el flujo principal
+            si se registra correctamente pero falla el envio del correo,
+            el usuario igual queda registrado y puede solicitar un nuevo correo de verificacion
+             */
             try {
                 mailService.sendVerificationEmail(newUser.getEmail(), verificationLink);
-                log.info("Correo de verificación enviado a: {}", newUser.getEmail());
+                log.info("Correo de verificación enviado a: "+ newUser.getEmail());
             } catch (Exception e) {
-                log.error("Error al enviar correo de verificación: {}", e.getMessage());
+                log.error("Error al enviar correo de verificación: "+ e.getMessage());
             }
 
             RegisterUserResponse response = RegisterUserResponse.newBuilder()
@@ -61,19 +66,21 @@ public class UserServiceGrpcImpl extends UserServiceGrpc.UserServiceImplBase {
             responseObserver.onCompleted();
 
         } catch (InvalidUserDataException e) {
+            log.error("Datos inválidos en intento de registro para el email: "+ request.getEmail());
             responseObserver.onError(
                 Status.INVALID_ARGUMENT
                     .withDescription(e.getMessage())
                     .asException()
             );
         } catch (UserAlreadyExistsException e) {
+            log.error("Intento de registro con email ya existente: "+ request.getEmail());
             responseObserver.onError(
                 Status.ALREADY_EXISTS
                     .withDescription(e.getMessage())
                     .asException()
             );
         } catch (Exception e) {
-            log.error("Error inesperado en registerUser: {}", e.getMessage(), e);
+            log.error("Error inesperado en registerUser: "+ e.getMessage(), e);
             responseObserver.onError(
                 Status.INTERNAL
                     .withDescription("Error interno del servidor")
@@ -85,7 +92,7 @@ public class UserServiceGrpcImpl extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void loginUser(LoginUserRequest request, StreamObserver<LoginUserResponse> responseObserver) {
         try {
-            User user = userService.loginUser(request.getEmail(), request.getPassword());
+            UserEntity user = userService.loginUser(request.getEmail(), request.getPassword());
 
             String jwt = jwtTokenProvider.generateToken(user.getId(), user.getEmail());
 
@@ -96,26 +103,29 @@ public class UserServiceGrpcImpl extends UserServiceGrpc.UserServiceImplBase {
 
             responseObserver.onNext(response);
             responseObserver.onCompleted();
-
         } catch (InvalidUserDataException e) {
+            log.error("Datos inválidos en intento de login para el email: "+ request.getEmail());
             responseObserver.onError(
                 Status.INVALID_ARGUMENT
                     .withDescription(e.getMessage())
                     .asException()
             );
         } catch (InvalidCredentialsException e) {
+            log.error("Credenciales inválidas para el email: "+ request.getEmail());
             responseObserver.onError(
                 Status.UNAUTHENTICATED
                     .withDescription(e.getMessage())
                     .asException()
             );
         } catch (UserNotActiveException e) {
+            log.error("Intento de login con usuario no activo: "+ request.getEmail());
             responseObserver.onError(
                 Status.PERMISSION_DENIED
                     .withDescription(e.getMessage())
                     .asException()
             );
         } catch (Exception e) {
+            log.error("Error inesperado en loginUser: "+ e.getMessage(), e);
             responseObserver.onError(
                 Status.INTERNAL
                     .withDescription("Error interno del servidor")

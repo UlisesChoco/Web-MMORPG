@@ -1,14 +1,17 @@
 package com.chocolatada.auth.service.jpa.impl;
 
+import com.chocolatada.auth.repository.IUserRepository;
+import com.chocolatada.auth.security.JwtTokenProvider;
+import com.chocolatada.auth.security.VerificationTokenData;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import com.chocolatada.auth.entity.User;
+import com.chocolatada.auth.entity.UserEntity;
 import com.chocolatada.auth.entity.UserStatus;
 import com.chocolatada.auth.exception.InvalidCredentialsException;
 import com.chocolatada.auth.exception.InvalidUserDataException;
 import com.chocolatada.auth.exception.UserAlreadyExistsException;
 import com.chocolatada.auth.exception.UserNotActiveException;
-import com.chocolatada.auth.repository.UserRepository;
 import com.chocolatada.auth.security.PasswordEncoderService;
 import com.chocolatada.auth.service.jpa.IUserService;
 import com.chocolatada.auth.validator.UserValidator;
@@ -17,14 +20,19 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements IUserService {
 
-    private final UserRepository userRepository;
+    private final IUserRepository userRepository;
+
     private final UserValidator userValidator;
+
     private final PasswordEncoderService passwordEncoderService;
 
+    private final JwtTokenProvider jwtTokenProvider;
+
     @Override
-    public User registerUser(String email, String password) 
+    public UserEntity registerUser(String email, String password)
         throws InvalidUserDataException, UserAlreadyExistsException {
         userValidator.validateEmail(email);
         userValidator.validatePassword(password);
@@ -36,7 +44,7 @@ public class UserServiceImpl implements IUserService {
         }
 
         String encodedPassword = passwordEncoderService.encode(password);
-        User newUser = User.builder()
+        UserEntity newUser = UserEntity.builder()
             .email(email)
             .password(encodedPassword)
             .status(UserStatus.PENDING)
@@ -46,12 +54,12 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public User loginUser(String email, String password) 
+    public UserEntity loginUser(String email, String password)
         throws InvalidUserDataException, InvalidCredentialsException, UserNotActiveException {
         userValidator.validateEmail(email);
         userValidator.validatePassword(password);
 
-        User user = userRepository.findByEmail(email)
+        UserEntity user = userRepository.findByEmail(email)
             .orElseThrow(() -> new InvalidCredentialsException(
                 "Las credenciales proporcionadas son inválidas"
             ));
@@ -78,8 +86,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public User updateUserStatus(Long userId, UserStatus newStatus) {
-        User user = userRepository.findById(userId)
+    public UserEntity updateUserStatus(Long userId, UserStatus newStatus) {
+        UserEntity user = userRepository.findById(userId)
             .orElseThrow(() -> new IllegalArgumentException(
                 "Usuario no encontrado con ID: " + userId
             ));
@@ -87,5 +95,25 @@ public class UserServiceImpl implements IUserService {
         user.setStatus(newStatus);
 
         return userRepository.save(user);
+    }
+
+    @Override
+    public void markEmailAsVerified(String token) throws Exception {
+        try {
+            log.info("Intento de verificación de email con token: " + token);
+
+            VerificationTokenData tokenData = jwtTokenProvider.validateVerificationToken(token);
+            Long userId = tokenData.getUserId();
+            String email = tokenData.getEmail();
+
+            log.info("Token válido para usuario ID: "+ userId +", email: " + email);
+
+            updateUserStatus(userId, UserStatus.ACTIVE);
+
+            log.info("Usuario ID: "+ userId +" marcado como ACTIVE");
+        } catch (Exception e) {
+            log.error("Error durante la verificación de email con token: "+ token, e);
+            throw e;
+        }
     }
 }
