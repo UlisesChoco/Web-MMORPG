@@ -3,7 +3,7 @@ package com.example.demo.mapper;
 import com.example.demo.grpc.BonusStats;
 
 public class BonusStatsMapper {
-    public static BonusStats toBonusStatsGrpc(com.example.demo.dto.BonusStats bonusStatsDto) {
+    public static BonusStats toBonusStatsGrpc(com.example.demo.dto.BonusStatsDTO bonusStatsDto) {
         BonusStats bonusStatsGrpc = BonusStats.newBuilder()
                 .setHp(bonusStatsDto.getHp())
                 .setAtk(bonusStatsDto.getAtk())
@@ -16,8 +16,8 @@ public class BonusStatsMapper {
         return bonusStatsGrpc;
     }
 
-    public static com.example.demo.dto.BonusStats toBonusStatsDto(BonusStats bonusStatsGrpc) {
-        com.example.demo.dto.BonusStats bonusStatsDto = new com.example.demo.dto.BonusStats();
+    public static com.example.demo.dto.BonusStatsDTO toBonusStatsDto(BonusStats bonusStatsGrpc) {
+        com.example.demo.dto.BonusStatsDTO bonusStatsDto = new com.example.demo.dto.BonusStatsDTO();
         bonusStatsDto.setHp(bonusStatsGrpc.getHp());
         bonusStatsDto.setAtk(bonusStatsGrpc.getAtk());
         bonusStatsDto.setDef(bonusStatsGrpc.getDef());

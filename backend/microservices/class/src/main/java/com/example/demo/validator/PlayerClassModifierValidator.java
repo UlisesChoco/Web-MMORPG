@@ -1,10 +1,10 @@
 package com.example.demo.validator;
 
-import com.example.demo.entity.PlayerClassModifier;
+import com.example.demo.entity.PlayerClassModifierEntity;
 import com.example.demo.exception.InvalidPlayerClassModifierDataException;
 
 public class PlayerClassModifierValidator {
-    public static boolean isValidModifier(PlayerClassModifier modifier) throws InvalidPlayerClassModifierDataException {
+    public static boolean isValidModifier(PlayerClassModifierEntity modifier) throws InvalidPlayerClassModifierDataException {
         float critRateModifier = modifier.getCritRateModifier();
         float critDamageModifier = modifier.getCritDamageModifier();
         float hpModifier = modifier.getHpModifier();

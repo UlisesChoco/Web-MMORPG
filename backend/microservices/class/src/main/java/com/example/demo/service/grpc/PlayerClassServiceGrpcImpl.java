@@ -1,8 +1,8 @@
 package com.example.demo.service.grpc;
 
-import com.example.demo.dto.BonusStats;
-import com.example.demo.dto.PlayerStats;
-import com.example.demo.entity.PlayerClass;
+import com.example.demo.dto.BonusStatsDTO;
+import com.example.demo.dto.PlayerStatsDTO;
+import com.example.demo.entity.PlayerClassEntity;
 import com.example.demo.exception.InvalidPlayerClassDataException;
 import com.example.demo.grpc.*;
 import com.example.demo.mapper.BonusStatsMapper;
@@ -30,7 +30,7 @@ public class PlayerClassServiceGrpcImpl extends PlayerClassServiceGrpc.PlayerCla
     public void getClassById(GetClassByIdRequest request, StreamObserver<GetClassByIdResponse> responseObserver) {
         try {
             Long classId = request.getClassId();
-            PlayerClass playerClass = playerClassService.findById(classId);
+            PlayerClassEntity playerClass = playerClassService.findById(classId);
             ClassData classData = PlayerClassMapper.toClassData(playerClass);
 
             GetClassByIdResponse response = GetClassByIdResponse.newBuilder()
@@ -62,9 +62,9 @@ public class PlayerClassServiceGrpcImpl extends PlayerClassServiceGrpc.PlayerCla
     public void getScaledClassStats(GetScaledClassStatsRequest request, StreamObserver<GetScaledClassStatsResponse> responseObserver) {
         try {
             Long classId = request.getClassId();
-            BonusStats bonus = BonusStatsMapper.toBonusStatsDto(request.getBonus());
+            BonusStatsDTO bonus = BonusStatsMapper.toBonusStatsDto(request.getBonus());
             int level = request.getLevel();
-            PlayerStats playerStatsDto = playerClassStatsService.getScaledPlayerClassStats(classId, bonus, level);
+            PlayerStatsDTO playerStatsDto = playerClassStatsService.getScaledPlayerClassStats(classId, bonus, level);
             com.example.demo.grpc.ScaledStats scaledStatsGrpc = PlayerClassStatsMapper.toScaledStatsGrpc(playerStatsDto);
 
             GetScaledClassStatsResponse response = GetScaledClassStatsResponse.newBuilder()
@@ -94,7 +94,7 @@ public class PlayerClassServiceGrpcImpl extends PlayerClassServiceGrpc.PlayerCla
 
     @Override
     public void listClasses(ListClassesRequest request, StreamObserver<ListClassesResponse> responseObserver) {
-        List<PlayerClass> playerClasses = playerClassService.findAll();
+        List<PlayerClassEntity> playerClasses = playerClassService.findAll();
         List<ClassData> classesData = PlayerClassMapper.toClassesData(playerClasses);
 
         ListClassesResponse response = ListClassesResponse.newBuilder()

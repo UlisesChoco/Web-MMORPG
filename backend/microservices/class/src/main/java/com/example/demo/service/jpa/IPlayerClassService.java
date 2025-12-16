@@ -2,17 +2,17 @@ package com.example.demo.service.jpa;
 
 import java.util.List;
 
-import com.example.demo.entity.PlayerClass;
+import com.example.demo.entity.PlayerClassEntity;
 import com.example.demo.exception.InvalidPlayerClassDataException;
 
 public interface IPlayerClassService {
-    PlayerClass findById(Long id) throws InvalidPlayerClassDataException;
+    PlayerClassEntity findById(Long id) throws InvalidPlayerClassDataException;
 
-    PlayerClass findByName(String name) throws InvalidPlayerClassDataException;
+    PlayerClassEntity findByName(String name) throws InvalidPlayerClassDataException;
 
-    List<PlayerClass> findAll();
+    List<PlayerClassEntity> findAll();
 
-    PlayerClass save(PlayerClass playerClass) throws InvalidPlayerClassDataException;
+    PlayerClassEntity save(PlayerClassEntity playerClass) throws InvalidPlayerClassDataException;
 
     void saveAllFromResources() throws InvalidPlayerClassDataException;
 }

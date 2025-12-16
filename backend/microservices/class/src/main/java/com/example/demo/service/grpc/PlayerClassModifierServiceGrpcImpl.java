@@ -1,6 +1,6 @@
 package com.example.demo.service.grpc;
 
-import com.example.demo.entity.PlayerClassModifier;
+import com.example.demo.entity.PlayerClassModifierEntity;
 import com.example.demo.exception.InvalidPlayerClassDataException;
 import com.example.demo.grpc.GetClassModifiersRequest;
 import com.example.demo.grpc.GetClassModifiersResponse;
@@ -24,7 +24,7 @@ public class PlayerClassModifierServiceGrpcImpl extends PlayerClassModifierServi
     public void getClassModifiers(GetClassModifiersRequest request, StreamObserver<GetClassModifiersResponse> responseObserver) {
         try {
             Long classId = request.getClassId();
-            PlayerClassModifier modifiers = playerClassModifierService.findByPlayerClassId(classId);
+            PlayerClassModifierEntity modifiers = playerClassModifierService.findByPlayerClassId(classId);
             ModifierData modifierData = PlayerClassModifierMapper.toModifierData(modifiers);
 
             GetClassModifiersResponse response = GetClassModifiersResponse.newBuilder()

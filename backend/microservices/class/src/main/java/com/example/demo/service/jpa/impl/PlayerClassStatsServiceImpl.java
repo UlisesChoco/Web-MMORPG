@@ -1,11 +1,11 @@
 package com.example.demo.service.jpa.impl;
 
-import com.example.demo.dto.BonusStats;
-import com.example.demo.dto.PlayerStats;
+import com.example.demo.dto.BonusStatsDTO;
+import com.example.demo.dto.PlayerStatsDTO;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.PlayerClass;
-import com.example.demo.entity.PlayerClassModifier;
+import com.example.demo.entity.PlayerClassEntity;
+import com.example.demo.entity.PlayerClassModifierEntity;
 import com.example.demo.exception.InvalidPlayerClassDataException;
 import com.example.demo.service.formula.ScalateStatFormula;
 import com.example.demo.service.jpa.IPlayerClassModifierService;
@@ -22,10 +22,10 @@ public class PlayerClassStatsServiceImpl implements IPlayerClassStatsService {
     private final IPlayerClassModifierService playerClassModifierService;
 
     @Override
-    public PlayerStats getScaledPlayerClassStats(Long classId, BonusStats bonus, int level) throws InvalidPlayerClassDataException {
-        PlayerClass playerClass = playerClassService.findById(classId);
+    public PlayerStatsDTO getScaledPlayerClassStats(Long classId, BonusStatsDTO bonus, int level) throws InvalidPlayerClassDataException {
+        PlayerClassEntity playerClass = playerClassService.findById(classId);
 
-        PlayerClassModifier classModifier = playerClassModifierService.findByPlayerClassId(classId);
+        PlayerClassModifierEntity classModifier = playerClassModifierService.findByPlayerClassId(classId);
 
         float critRate = ScalateStatFormula.calculateStatAtLevel(
             playerClass.getCritRate(), 
@@ -76,7 +76,7 @@ public class PlayerClassStatsServiceImpl implements IPlayerClassStatsService {
             level
         );
 
-        return PlayerStats.builder()
+        return PlayerStatsDTO.builder()
             .critRate(critRate)
             .critDamage(critDamage)
             .hp(hp)

@@ -2,11 +2,9 @@ package com.example.demo.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,41 +13,44 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "player_class_modifier")
+@Table(name = "player_class")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PlayerClassModifier {
+public class PlayerClassEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private PlayerClass playerClass;
+    @Column(nullable = false, unique = true)
+    private String name;
 
     @Column(nullable = false)
-    private float critRateModifier;
+    private String description;
 
     @Column(nullable = false)
-    private float critDamageModifier;
+    private float critRate;
 
     @Column(nullable = false)
-    private float hpModifier;
+    private float critDamage;
 
     @Column(nullable = false)
-    private float atkModifier;
+    private int hp;
 
     @Column(nullable = false)
-    private float defModifier;
+    private int atk;
 
     @Column(nullable = false)
-    private float staminaModifier;
+    private int def;
 
     @Column(nullable = false)
-    private float accuracyModifier;
+    private int stamina;
 
     @Column(nullable = false)
-    private float evasionModifier;
+    private int accuracy;
+
+    @Column(nullable = false)
+    private int evasion;
 }

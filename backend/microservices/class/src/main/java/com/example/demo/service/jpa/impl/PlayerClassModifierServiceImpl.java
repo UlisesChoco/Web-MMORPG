@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.configuration.resources.definition.player_class_modifier.ClassModifierConfigurationProperties;
 import com.example.demo.configuration.resources.definition.player_class_modifier.ClassModifierDefinition;
-import com.example.demo.entity.PlayerClass;
-import com.example.demo.entity.PlayerClassModifier;
+import com.example.demo.entity.PlayerClassEntity;
+import com.example.demo.entity.PlayerClassModifierEntity;
 import com.example.demo.exception.InvalidPlayerClassDataException;
 import com.example.demo.mapper.PlayerClassModifierMapper;
 import com.example.demo.repository.PlayerClassModifierRepository;
@@ -28,7 +28,7 @@ public class PlayerClassModifierServiceImpl implements IPlayerClassModifierServi
         for(ClassModifierDefinition definition : classModifierConfigurationProperties.getModifiers()) {
             String className = definition.getName();
 
-            PlayerClass playerClass = null;
+            PlayerClassEntity playerClass = null;
             try {
                 playerClass = playerClassService.findByName(className);
             } catch (InvalidPlayerClassDataException e) {
@@ -37,8 +37,8 @@ public class PlayerClassModifierServiceImpl implements IPlayerClassModifierServi
                     + className + " no existe."
                 );
             }
-            
-            PlayerClassModifier classModifier = PlayerClassModifierMapper.toPlayerClassModifier(definition);
+
+            PlayerClassModifierEntity classModifier = PlayerClassModifierMapper.toPlayerClassModifier(definition);
 
             classModifier.setPlayerClass(playerClass);
 
@@ -47,14 +47,14 @@ public class PlayerClassModifierServiceImpl implements IPlayerClassModifierServi
     }
 
     @Override
-    public PlayerClassModifier findById(Long id) throws InvalidPlayerClassDataException {
+    public PlayerClassModifierEntity findById(Long id) throws InvalidPlayerClassDataException {
         return playerClassModifierRepository.findById(id).orElseThrow(() -> 
             new InvalidPlayerClassDataException("Modificador de clase de jugador no encontrado con ID: " + id)
         );
     }
 
     @Override
-    public PlayerClassModifier findByPlayerClassId(Long playerClassId) throws InvalidPlayerClassDataException {
+    public PlayerClassModifierEntity findByPlayerClassId(Long playerClassId) throws InvalidPlayerClassDataException {
         return playerClassModifierRepository.findByPlayerClassId(playerClassId).orElseThrow(() -> 
             new InvalidPlayerClassDataException("Modificador de clase de jugador no encontrado para la clase de jugador con ID: " + playerClassId)
         );

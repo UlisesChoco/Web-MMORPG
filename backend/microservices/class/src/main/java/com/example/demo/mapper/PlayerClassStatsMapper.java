@@ -1,10 +1,10 @@
 package com.example.demo.mapper;
 
-import com.example.demo.dto.PlayerStats;
+import com.example.demo.dto.PlayerStatsDTO;
 import com.example.demo.grpc.ScaledStats;
 
 public class PlayerClassStatsMapper {
-    public static ScaledStats toScaledStatsGrpc(PlayerStats playerStatsDto) {
+    public static ScaledStats toScaledStatsGrpc(PlayerStatsDTO playerStatsDto) {
         ScaledStats scaledStatsGrpc = ScaledStats.newBuilder()
                 .setHp(playerStatsDto.getHp())
                 .setAtk(playerStatsDto.getAtk())

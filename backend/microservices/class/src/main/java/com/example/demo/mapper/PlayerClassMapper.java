@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.demo.configuration.resources.definition.player_class.ClassDefinition;
-import com.example.demo.entity.PlayerClass;
+import com.example.demo.entity.PlayerClassEntity;
 import com.example.demo.grpc.ClassData;
 
 public class PlayerClassMapper {
-    public static PlayerClass toPlayerClass(ClassDefinition classDef) {
-        PlayerClass playerClass = PlayerClass.builder()
+    public static PlayerClassEntity toPlayerClass(ClassDefinition classDef) {
+        PlayerClassEntity playerClass = PlayerClassEntity.builder()
                 .name(classDef.getName())
                 .description(classDef.getDescription())
                 .critRate(classDef.getCritRate())
@@ -25,8 +25,8 @@ public class PlayerClassMapper {
         return playerClass;
     }
 
-    public static List<PlayerClass> toPlayerClasses(List<ClassDefinition> classDefs) {
-        List<PlayerClass> playerClasses = new ArrayList<>();
+    public static List<PlayerClassEntity> toPlayerClasses(List<ClassDefinition> classDefs) {
+        List<PlayerClassEntity> playerClasses = new ArrayList<>();
 
         for(ClassDefinition classDef : classDefs)
             playerClasses.add(toPlayerClass(classDef));
@@ -34,7 +34,7 @@ public class PlayerClassMapper {
         return playerClasses;
     }
 
-    public static ClassData toClassData(PlayerClass playerClass) {
+    public static ClassData toClassData(PlayerClassEntity playerClass) {
         ClassData classData = ClassData.newBuilder()
                 .setId(playerClass.getId())
                 .setName(playerClass.getName())
@@ -52,10 +52,10 @@ public class PlayerClassMapper {
         return classData;
     }
 
-    public static List<ClassData> toClassesData(List<PlayerClass> playerClasses) {
+    public static List<ClassData> toClassesData(List<PlayerClassEntity> playerClasses) {
         List<ClassData> classData = new ArrayList<>();
 
-        for(PlayerClass playerClass : playerClasses)
+        for(PlayerClassEntity playerClass : playerClasses)
             classData.add(toClassData(playerClass));
 
         return classData;

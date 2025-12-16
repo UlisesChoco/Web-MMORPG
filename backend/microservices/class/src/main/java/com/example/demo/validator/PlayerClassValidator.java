@@ -4,15 +4,16 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import com.example.demo.configuration.resources.definition.player_class.ClassDefinition;
-import com.example.demo.entity.PlayerClass;
+import com.example.demo.entity.PlayerClassEntity;
 import com.example.demo.exception.InvalidPlayerClassDataException;
 import com.example.demo.mapper.PlayerClassMapper;
 
 public class PlayerClassValidator {
     private final static String NAME_REGEX = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$";
+
     private final static Pattern NAME_PATTERN = Pattern.compile(NAME_REGEX);
 
-    public static boolean validate(PlayerClass playerClass, int level) throws InvalidPlayerClassDataException {
+    public static boolean validate(PlayerClassEntity playerClass, int level) throws InvalidPlayerClassDataException {
         isValidClassName(playerClass.getName());
         isValidDescription(playerClass.getDescription());
         isValidLevel(level);
@@ -20,7 +21,7 @@ public class PlayerClassValidator {
         return true;
     }
 
-    public static boolean validate(PlayerClass playerClass) throws InvalidPlayerClassDataException {
+    public static boolean validate(PlayerClassEntity playerClass) throws InvalidPlayerClassDataException {
         isValidClassName(playerClass.getName());
         isValidDescription(playerClass.getDescription());
         isValidStats(playerClass);
@@ -29,7 +30,7 @@ public class PlayerClassValidator {
 
     public static boolean validate(List<ClassDefinition> classDefinitions) throws InvalidPlayerClassDataException {
         for(ClassDefinition classDef : classDefinitions) {
-            PlayerClass playerClass = PlayerClassMapper.toPlayerClass(classDef);
+            PlayerClassEntity playerClass = PlayerClassMapper.toPlayerClass(classDef);
             isValidClassName(playerClass.getName());
             isValidDescription(playerClass.getDescription());
             isValidStats(playerClass);
@@ -61,7 +62,7 @@ public class PlayerClassValidator {
         return true;
     }
     
-    public static boolean isValidStats(PlayerClass playerClass) throws InvalidPlayerClassDataException {
+    public static boolean isValidStats(PlayerClassEntity playerClass) throws InvalidPlayerClassDataException {
         float critRate = playerClass.getCritRate();
         float critDamage = playerClass.getCritDamage();
         int hp = playerClass.getHp();

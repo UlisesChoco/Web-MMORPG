@@ -13,7 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Builder
-public class PlayerStats {
+public class PlayerStatsDTO {
     private float critRate;
 
     private float critDamage;

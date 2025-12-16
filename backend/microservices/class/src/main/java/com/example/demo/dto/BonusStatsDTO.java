@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 @Builder
-public class BonusStats {
+public class BonusStatsDTO {
     private int hp;
 
     private int atk;

@@ -1,12 +1,12 @@
 package com.example.demo.mapper;
 
 import com.example.demo.configuration.resources.definition.player_class_modifier.ClassModifierDefinition;
-import com.example.demo.entity.PlayerClassModifier;
+import com.example.demo.entity.PlayerClassModifierEntity;
 import com.example.demo.grpc.ModifierData;
 
 public class PlayerClassModifierMapper {
-    public static PlayerClassModifier toPlayerClassModifier(ClassModifierDefinition definition) {
-        PlayerClassModifier classModifier = PlayerClassModifier.builder()
+    public static PlayerClassModifierEntity toPlayerClassModifier(ClassModifierDefinition definition) {
+        PlayerClassModifierEntity classModifier = PlayerClassModifierEntity.builder()
             .critRateModifier(definition.getCritRateModifier())
             .critDamageModifier(definition.getCritDamageModifier())
             .hpModifier(definition.getHpModifier())
@@ -20,7 +20,7 @@ public class PlayerClassModifierMapper {
         return classModifier;
     }
 
-    public static ModifierData toModifierData(PlayerClassModifier playerClassModifier) {
+    public static ModifierData toModifierData(PlayerClassModifierEntity playerClassModifier) {
         ModifierData modifierData = ModifierData.newBuilder()
             .setCritRateModifier(playerClassModifier.getCritRateModifier())
             .setCritDamageModifier(playerClassModifier.getCritDamageModifier())

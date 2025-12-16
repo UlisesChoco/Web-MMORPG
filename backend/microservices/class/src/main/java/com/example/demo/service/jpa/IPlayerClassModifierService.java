@@ -1,10 +1,10 @@
 package com.example.demo.service.jpa;
 
-import com.example.demo.entity.PlayerClassModifier;
+import com.example.demo.entity.PlayerClassModifierEntity;
 import com.example.demo.exception.InvalidPlayerClassDataException;
 
 public interface IPlayerClassModifierService {
     void saveAllFromResources() throws InvalidPlayerClassDataException;
-    PlayerClassModifier findById(Long id) throws InvalidPlayerClassDataException;
-    PlayerClassModifier findByPlayerClassId(Long playerClassId) throws InvalidPlayerClassDataException;
+    PlayerClassModifierEntity findById(Long id) throws InvalidPlayerClassDataException;
+    PlayerClassModifierEntity findByPlayerClassId(Long playerClassId) throws InvalidPlayerClassDataException;
 }

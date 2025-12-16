@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.configuration.resources.definition.player_class.ClassesConfigurationProperties;
-import com.example.demo.entity.PlayerClass;
+import com.example.demo.entity.PlayerClassEntity;
 import com.example.demo.exception.InvalidPlayerClassDataException;
 import com.example.demo.mapper.PlayerClassMapper;
 import com.example.demo.repository.PlayerClassRepository;
@@ -22,19 +22,19 @@ public class PlayerClassServiceImpl implements IPlayerClassService {
     private final ClassesConfigurationProperties classesConfig;
 
     @Override
-    public PlayerClass findById(Long id) throws InvalidPlayerClassDataException {
+    public PlayerClassEntity findById(Long id) throws InvalidPlayerClassDataException {
         return playerClassRepository.findById(id).orElseThrow(() -> 
             new InvalidPlayerClassDataException("Clase de jugador no encontrada con ID: " + id)
         );
     }
 
     @Override
-    public List<PlayerClass> findAll() {
+    public List<PlayerClassEntity> findAll() {
         return playerClassRepository.findAll();
     }
 
     @Override
-    public PlayerClass save(PlayerClass playerClass) throws InvalidPlayerClassDataException {
+    public PlayerClassEntity save(PlayerClassEntity playerClass) throws InvalidPlayerClassDataException {
         PlayerClassValidator.validate(playerClass);
 
         return playerClassRepository.save(playerClass);
@@ -44,13 +44,13 @@ public class PlayerClassServiceImpl implements IPlayerClassService {
     public void saveAllFromResources() throws InvalidPlayerClassDataException {
         PlayerClassValidator.validate(classesConfig.getClasses());
 
-        List<PlayerClass> playerClasses = PlayerClassMapper.toPlayerClasses(classesConfig.getClasses());
+        List<PlayerClassEntity> playerClasses = PlayerClassMapper.toPlayerClasses(classesConfig.getClasses());
 
         playerClassRepository.saveAll(playerClasses);
     }
 
     @Override
-    public PlayerClass findByName(String name) throws InvalidPlayerClassDataException {
+    public PlayerClassEntity findByName(String name) throws InvalidPlayerClassDataException {
         return playerClassRepository.findByName(name).orElseThrow(() -> 
             new InvalidPlayerClassDataException("Clase de jugador no encontrada con nombre: " + name)
         );
