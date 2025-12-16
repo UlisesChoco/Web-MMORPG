@@ -2,7 +2,7 @@ package com.chocolatada.player.mapper;
 
 import com.chocolatada.player.dto.PlayerTopLevelDTO;
 import com.chocolatada.player.dto.PlayerUpdateDTO;
-import com.chocolatada.player.entity.Player;
+import com.chocolatada.player.entity.PlayerEntity;
 
 import com.chocolatada.player.grpc.PlayerResponse;
 
@@ -10,23 +10,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerMapper {
-    public static PlayerTopLevelDTO toPlayerTopLevelDTO(Player player) {
+    public static PlayerTopLevelDTO toPlayerTopLevelDTO(PlayerEntity player) {
         PlayerTopLevelDTO dto = new PlayerTopLevelDTO();
         dto.setName(player.getName());
         dto.setLevel(player.getLevel());
         return dto;
     }
 
-    public static List<PlayerTopLevelDTO> toPlayerTopLevelDTOs(List<Player> players) {
+    public static List<PlayerTopLevelDTO> toPlayerTopLevelDTOs(List<PlayerEntity> players) {
         List<PlayerTopLevelDTO> playerTopLevelDTOS = new ArrayList<>();
 
-        for (Player player : players)
+        for (PlayerEntity player : players)
             playerTopLevelDTOS.add(toPlayerTopLevelDTO(player));
 
         return playerTopLevelDTOS;
     }
 
-    public static Player toPlayer(Player player, PlayerUpdateDTO playerUpdateDTO) {
+    public static PlayerEntity toPlayer(PlayerEntity player, PlayerUpdateDTO playerUpdateDTO) {
         playerUpdateDTO.getName().ifPresent(name -> player.setName(name));
         playerUpdateDTO.getGold().ifPresent(gold -> player.setGold(gold));
         playerUpdateDTO.getLevel().ifPresent(level -> player.setLevel(level));
@@ -42,7 +42,7 @@ public class PlayerMapper {
         return player;
     }
 
-    public static com.chocolatada.player.grpc.Player toPlayerGrpc(Player player) {
+    public static com.chocolatada.player.grpc.Player toPlayerGrpc(PlayerEntity player) {
         return com.chocolatada.player.grpc.Player.newBuilder()
                 .setId(player.getId())
                 .setUserId(player.getUserId())
@@ -62,7 +62,7 @@ public class PlayerMapper {
                 .build();
     }
 
-    public static PlayerResponse toPlayerResponse(Player player) {
+    public static PlayerResponse toPlayerResponse(PlayerEntity player) {
         return PlayerResponse.newBuilder()
                 .setPlayer(toPlayerGrpc(player))
                 .build();

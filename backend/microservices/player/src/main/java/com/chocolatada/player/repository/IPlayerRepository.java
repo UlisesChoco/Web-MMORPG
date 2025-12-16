@@ -1,6 +1,6 @@
 package com.chocolatada.player.repository;
 
-import com.chocolatada.player.entity.Player;
+import com.chocolatada.player.entity.PlayerEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,20 +12,20 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PlayerRepository extends JpaRepository<Player, Long> {
+public interface IPlayerRepository extends JpaRepository<PlayerEntity, Long> {
     @Query("""
         SELECT p
-        FROM Player p
+        FROM PlayerEntity p
         WHERE (:alive IS NULL OR p.alive = :alive)
         ORDER BY p.level DESC
     """)
-    List<Player> findTopByLevel(@Param("alive") Boolean alive, Pageable pageable);
+    List<PlayerEntity> findTopByLevel(@Param("alive") Boolean alive, Pageable pageable);
 
-    Optional<Player> findByUserId(Long userId);
+    Optional<PlayerEntity> findByUserId(Long userId);
 
     @Modifying
     @Query("""
-        UPDATE Player p
+        UPDATE PlayerEntity p
         SET p.alive = FALSE
         WHERE p.id = :id
     """)

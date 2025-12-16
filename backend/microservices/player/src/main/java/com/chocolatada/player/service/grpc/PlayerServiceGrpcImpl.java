@@ -2,7 +2,7 @@ package com.chocolatada.player.service.grpc;
 
 import com.chocolatada.player.dto.PlayerTopLevelDTO;
 import com.chocolatada.player.dto.PlayerUpdateDTO;
-import com.chocolatada.player.entity.Player;
+import com.chocolatada.player.entity.PlayerEntity;
 import com.chocolatada.player.exception.InvalidPlayerDataException;
 import com.chocolatada.player.mapper.PlayerMapper;
 import com.chocolatada.player.service.jpa.IPlayerService;
@@ -36,7 +36,7 @@ public class PlayerServiceGrpcImpl extends PlayerServiceGrpc.PlayerServiceImplBa
     public void getPlayerById(GetPlayerByIdRequest request, StreamObserver<PlayerResponse> responseObserver) {
         try {
             Long playerId = request.getPlayerId();
-            Player player = playerService.findById(playerId);
+            PlayerEntity player = playerService.findById(playerId);
             PlayerResponse response = PlayerMapper.toPlayerResponse(player);
 
             log.info("Jugador de ID: " + playerId + " obtenido exitosamente.");
@@ -59,7 +59,7 @@ public class PlayerServiceGrpcImpl extends PlayerServiceGrpc.PlayerServiceImplBa
     public void getPlayerByUserId(GetPlayerByUserIdRequest request, StreamObserver<PlayerResponse> responseObserver) {
         try {
             Long userId = request.getUserId();
-            Player player = playerService.findByUserId(userId);
+            PlayerEntity player = playerService.findByUserId(userId);
             PlayerResponse response = PlayerMapper.toPlayerResponse(player);
 
             log.info("Jugador obtenido exitosamente para userId: {}", userId);

@@ -2,10 +2,10 @@ package com.chocolatada.player.service.jpa.impl;
 
 import com.chocolatada.player.dto.PlayerTopLevelDTO;
 import com.chocolatada.player.dto.PlayerUpdateDTO;
-import com.chocolatada.player.entity.Player;
+import com.chocolatada.player.entity.PlayerEntity;
 import com.chocolatada.player.exception.InvalidPlayerDataException;
 import com.chocolatada.player.mapper.PlayerMapper;
-import com.chocolatada.player.repository.PlayerRepository;
+import com.chocolatada.player.repository.IPlayerRepository;
 import com.chocolatada.player.service.jpa.IPlayerService;
 import com.chocolatada.player.validator.PlayerValidator;
 import jakarta.transaction.Transactional;
@@ -19,17 +19,17 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PlayerServiceImpl implements IPlayerService {
-    private final PlayerRepository playerRepository;
+    private final IPlayerRepository playerRepository;
 
     @Override
-    public Player findById(Long id) throws InvalidPlayerDataException {
+    public PlayerEntity findById(Long id) throws InvalidPlayerDataException {
         return playerRepository.findById(id).orElseThrow(() ->
                 new InvalidPlayerDataException("No existe un personaje con ID: " + id)
         );
     }
 
     @Override
-    public Player findByUserId(Long userId) throws InvalidPlayerDataException {
+    public PlayerEntity findByUserId(Long userId) throws InvalidPlayerDataException {
         return playerRepository.findByUserId(userId).orElseThrow(() ->
                 new InvalidPlayerDataException("No existe un personaje con UserID: " + userId)
         );
@@ -39,15 +39,15 @@ public class PlayerServiceImpl implements IPlayerService {
     public List<PlayerTopLevelDTO> findTopByLevel(Boolean isAlive, int limit) {
         Pageable pageable = PageRequest.of(0, limit);
 
-        List<Player> players = playerRepository.findTopByLevel(isAlive, pageable);
+        List<PlayerEntity> players = playerRepository.findTopByLevel(isAlive, pageable);
 
         return PlayerMapper.toPlayerTopLevelDTOs(players);
     }
 
     @Transactional
     @Override
-    public Player update(Long id, PlayerUpdateDTO playerUpdateDTO) throws InvalidPlayerDataException {
-        Player player = findById(id);
+    public PlayerEntity update(Long id, PlayerUpdateDTO playerUpdateDTO) throws InvalidPlayerDataException {
+        PlayerEntity player = findById(id);
 
         PlayerValidator.validatePlayerUpdateDTO(playerUpdateDTO);
 
