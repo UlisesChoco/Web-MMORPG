@@ -1,0 +1,29 @@
+config:
+  items:
+    - name: "Espada de madera"
+      description: "Una espada básica hecha de madera."
+      gold: 100
+      required-level: 1
+      type: "WEAPON"
+      slot: "MAIN_HAND"
+      atk-bonus: 10
+      def-bonus: 0
+      stamina-bonus: -5
+      accuracy-bonus: 5
+      evasion-bonus: 0
+      crit-rate-bonus: 3
+      crit-damage-bonus: 10
+
+    - name: "Pechera de cuero"
+      description: "Una pechera ligera hecha de cuero resistente."
+      gold: 150
+      required-level: 2
+      type: "ARMOR"
+      slot: "CHEST"
+      atk-bonus: 0
+      def-bonus: 35
+      stamina-bonus: -10
+      accuracy-bonus: -5
+      evasion-bonus: -5
+      crit-rate-bonus: 0
+      crit-damage-bonus: 0
