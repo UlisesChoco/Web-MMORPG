@@ -17,7 +17,7 @@ public class TowerEnemyEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tower_id", nullable = false)
-    private Long towerId;
+    private TowerEntity tower;
 
     @Column(nullable = false)
     private Long enemyId;

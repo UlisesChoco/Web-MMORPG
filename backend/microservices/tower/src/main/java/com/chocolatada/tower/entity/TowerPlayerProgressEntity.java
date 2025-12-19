@@ -18,7 +18,7 @@ public class TowerPlayerProgressEntity {
 
     @ManyToOne
     @JoinColumn(name = "tower_id", nullable = false)
-    private Long towerId;
+    private TowerEntity tower;
 
     @Column(nullable = false)
     private Long playerId;
