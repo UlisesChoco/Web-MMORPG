@@ -1,4 +1,4 @@
-package com.chocolatada.tower;
+package com.chocolatada.tower.exception;
 
 public class InvalidTowerDataException extends RuntimeException {
     public InvalidTowerDataException(String message) {

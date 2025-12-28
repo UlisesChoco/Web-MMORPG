@@ -1,6 +1,6 @@
 package com.chocolatada.tower.service.jpa;
 
-import com.chocolatada.tower.InvalidTowerDataException;
+import com.chocolatada.tower.exception.InvalidTowerDataException;
 import com.chocolatada.tower.dto.TowerDTO;
 import com.chocolatada.tower.entity.TowerEntity;
 

@@ -16,7 +16,7 @@ public class TowerPlayerProgressEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tower_id", nullable = false)
     private TowerEntity tower;
 

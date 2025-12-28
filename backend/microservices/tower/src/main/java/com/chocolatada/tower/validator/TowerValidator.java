@@ -1,6 +1,6 @@
 package com.chocolatada.tower.validator;
 
-import com.chocolatada.tower.InvalidTowerDataException;
+import com.chocolatada.tower.exception.InvalidTowerDataException;
 import com.chocolatada.tower.configuration.resource.TowerResource;
 import com.chocolatada.tower.configuration.resource.TowerResources;
 
