@@ -30,4 +30,21 @@ public class TowerMapper {
 
         return entities;
     }
+
+    public static com.chocolatada.tower.grpc.Tower toTowerGrpc(TowerEntity entity) {
+        return com.chocolatada.tower.grpc.Tower.newBuilder()
+                .setId(entity.getId())
+                .setFloor(entity.getFloor())
+                .setLevelRange(entity.getLevelRange())
+                .build();
+    }
+
+    public static List<com.chocolatada.tower.grpc.Tower> toTowersGrpc(List<TowerEntity> floors) {
+        List<com.chocolatada.tower.grpc.Tower> floorsGrpc = new ArrayList<>();
+
+        for(TowerEntity floor : floors)
+            floorsGrpc.add(toTowerGrpc(floor));
+
+        return floorsGrpc;
+    }
 }

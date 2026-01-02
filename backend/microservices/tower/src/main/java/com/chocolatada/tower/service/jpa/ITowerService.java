@@ -11,5 +11,7 @@ public interface ITowerService {
 
     TowerDTO findById(Long id) throws InvalidTowerDataException;
 
+    TowerEntity findByFloor(Integer floor) throws InvalidTowerDataException;
+
     void loadFromResources() throws InvalidTowerDataException;
 }

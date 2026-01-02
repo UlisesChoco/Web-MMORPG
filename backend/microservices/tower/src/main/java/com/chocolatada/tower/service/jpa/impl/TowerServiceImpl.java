@@ -37,6 +37,16 @@ public class TowerServiceImpl implements ITowerService {
     }
 
     @Override
+    public TowerEntity findByFloor(Integer floor) throws InvalidTowerDataException {
+        if(!TowerValidator.isValidFloor(floor))
+            throw new InvalidTowerDataException("Número de piso inválido: " + floor);
+
+        return towerRepository.findByFloor(floor).orElseThrow(() ->
+                new InvalidTowerDataException("No se encontró piso con número: " + floor)
+        );
+    }
+
+    @Override
     @Transactional
     public void loadFromResources() throws InvalidTowerDataException {
         TowerValidator.validate(towerResources);
