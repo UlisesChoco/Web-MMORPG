@@ -47,4 +47,11 @@ public class TowerMapper {
 
         return floorsGrpc;
     }
+
+    public static TowerEntity toEntity(TowerDTO towerDTO) {
+        return TowerEntity.builder()
+                .floor(towerDTO.getFloor())
+                .levelRange(towerDTO.getLevelRange())
+                .build();
+    }
 }
