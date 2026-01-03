@@ -21,4 +21,19 @@ public class TowerEnemyMapper {
 
         return dtos;
     }
+
+    public static com.chocolatada.tower_enemy.grpc.TowerEnemy toTowerEnemy(TowerEnemyDTO enemy) {
+        return com.chocolatada.tower_enemy.grpc.TowerEnemy.newBuilder()
+                .setEnemyId(enemy.getEnemyId())
+                .build();
+    }
+
+    public static List<com.chocolatada.tower_enemy.grpc.TowerEnemy> toTowerEnemies(List<TowerEnemyDTO> enemies) {
+        List<com.chocolatada.tower_enemy.grpc.TowerEnemy> towerEnemies = new ArrayList<>();
+
+        for(TowerEnemyDTO enemy : enemies)
+            towerEnemies.add(toTowerEnemy(enemy));
+
+        return towerEnemies;
+    }
 }
