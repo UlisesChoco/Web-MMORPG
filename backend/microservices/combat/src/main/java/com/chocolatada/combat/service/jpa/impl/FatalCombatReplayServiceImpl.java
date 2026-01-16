@@ -9,6 +9,8 @@ import com.chocolatada.combat.service.jpa.IFatalCombatReplayService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class FatalCombatReplayServiceImpl implements IFatalCombatReplayService {
@@ -23,5 +25,23 @@ public class FatalCombatReplayServiceImpl implements IFatalCombatReplayService {
                 );
 
         return FatalCombatReplayMapper.toFatalCombatReplayDTO(entity);
+    }
+
+    @Override
+    public String getTurnLogByCombatHistoryId(Long combatHistoryId) throws FatalCombatReplayException {
+        FatalCombatReplayEntity entity = fatalCombatReplayRepository
+                .findByCombatHistoryId(combatHistoryId)
+                .orElseThrow(() ->
+                        new FatalCombatReplayException("No existe replay fatal para el ID de historial de combate: " + combatHistoryId)
+                );
+
+        return entity.getTurnLog();
+    }
+
+    @Override
+    public List<FatalCombatReplayDTO> getRecentFatalities(int limit) {
+        List<FatalCombatReplayEntity> entities = fatalCombatReplayRepository.getRecentFatalities(limit);
+
+        return FatalCombatReplayMapper.toFatalCombatReplayDTOList(entities);
     }
 }

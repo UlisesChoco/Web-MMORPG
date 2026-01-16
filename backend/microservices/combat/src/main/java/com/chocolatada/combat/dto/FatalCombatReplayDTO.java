@@ -19,6 +19,4 @@ public class FatalCombatReplayDTO {
     private LocalDate date;
 
     private Integer totalTurns;
-
-    private String turnLog;
 }
