@@ -46,6 +46,9 @@ public class EnemyEntity {
     private Float critDamage;
 
     @Column(nullable = false)
+    private Integer hp;
+
+    @Column(nullable = false)
     private Integer atk;
 
     @Column(name = "def", nullable = false)
