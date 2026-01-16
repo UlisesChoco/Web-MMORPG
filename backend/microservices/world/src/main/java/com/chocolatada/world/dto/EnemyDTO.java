@@ -18,6 +18,7 @@ public class EnemyDTO {
     private Integer gold;
     private Float critRate;
     private Float critDamage;
+    private Integer hp;
     private Integer atk;
     private Integer def;
     private Integer stamina;

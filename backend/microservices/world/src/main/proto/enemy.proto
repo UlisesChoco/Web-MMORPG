@@ -25,11 +25,12 @@ message Enemy {
   int32 gold = 7;
   float crit_rate = 8;
   float crit_damage = 9;
-  int32 atk = 10;
-  int32 def = 11;
-  int32 stamina = 12;
-  int32 accuracy = 13;
-  int32 evasion = 14;
+  int32 hp = 10;
+  int32 atk = 11;
+  int32 def = 12;
+  int32 stamina = 13;
+  int32 accuracy = 14;
+  int32 evasion = 15;
 }
 
 message GetEnemyByIdRequest {
