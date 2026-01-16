@@ -5,18 +5,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class CombatHistoryDTO {
-    private Long playerId;
-
     private Long enemyId;
 
     private Integer totalTurns;
 
     private Boolean wasFatal;
 
-    private String date;
+    private LocalDate date;
 }
