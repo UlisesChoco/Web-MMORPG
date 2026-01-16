@@ -1,16 +1,14 @@
 package com.chocolatada.combat.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
+@ToString
 public class Combat {
     private Long combatHistoryId;
 
@@ -21,4 +19,8 @@ public class Combat {
     private List<CombatTurn> turns;
 
     private Loot loot;
+
+    public Combat() {
+        this.turns = new ArrayList<>();
+    }
 }

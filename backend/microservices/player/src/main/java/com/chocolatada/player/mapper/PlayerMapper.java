@@ -46,6 +46,7 @@ public class PlayerMapper {
         return com.chocolatada.player.grpc.Player.newBuilder()
                 .setId(player.getId())
                 .setUserId(player.getUserId())
+                .setClassId(player.getClassId())
                 .setName(player.getName())
                 .setGold(player.getGold())
                 .setLevel(player.getLevel())

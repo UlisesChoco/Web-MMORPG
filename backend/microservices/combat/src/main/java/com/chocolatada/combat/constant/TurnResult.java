@@ -4,5 +4,4 @@ public enum TurnResult {
     HIT,
     MISS,
     CRITICAL_HIT,
-    DODGE
 }

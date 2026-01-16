@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "combat_history")
+@Table(name = "fatal_combat_replay")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
