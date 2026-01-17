@@ -43,4 +43,9 @@ public class CombatHistoryServiceImpl implements ICombatHistoryService {
 
         return combatHistoryRepository.countByPlayerIdAndWasFatalFalse(playerId);
     }
+
+    @Override
+    public CombatHistoryEntity save(CombatHistoryEntity entity) {
+        return combatHistoryRepository.save(entity);
+    }
 }

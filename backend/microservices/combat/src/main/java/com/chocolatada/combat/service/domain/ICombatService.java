@@ -6,4 +6,6 @@ import io.grpc.StatusRuntimeException;
 
 public interface ICombatService {
     Combat processCombat(Entity player, Entity enemy) throws StatusRuntimeException;
+
+    void logCombatTurns(Combat combat);
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class EnemyStubClientServiceGrpcImpl {
     private final EnemyServiceGrpc.EnemyServiceBlockingStub enemyStub;
 
-    private Enemy getEnemy(Long enemyId) throws StatusRuntimeException {
+    public Enemy getEnemy(Long enemyId) throws StatusRuntimeException {
         GetEnemyByIdRequest request = GetEnemyByIdRequest.newBuilder()
                 .setEnemyId(enemyId)
                 .build();

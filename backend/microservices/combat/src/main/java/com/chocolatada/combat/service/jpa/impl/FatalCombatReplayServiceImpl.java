@@ -44,4 +44,9 @@ public class FatalCombatReplayServiceImpl implements IFatalCombatReplayService {
 
         return FatalCombatReplayMapper.toFatalCombatReplayDTOList(entities);
     }
+
+    @Override
+    public FatalCombatReplayEntity save(FatalCombatReplayEntity entity) {
+        return fatalCombatReplayRepository.save(entity);
+    }
 }

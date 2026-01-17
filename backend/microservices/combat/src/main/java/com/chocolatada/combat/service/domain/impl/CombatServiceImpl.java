@@ -4,18 +4,20 @@ import com.chocolatada.combat.constant.TurnAction;
 import com.chocolatada.combat.constant.TurnResult;
 import com.chocolatada.combat.domain.*;
 import com.chocolatada.combat.grpc.*;
-import com.chocolatada.combat.mapper.EntityMapper;
 import com.chocolatada.combat.mapper.StateMapper;
 import com.chocolatada.combat.service.domain.ICombatService;
 import com.chocolatada.combat.service.domain.formula.Formula;
 import io.grpc.StatusRuntimeException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CombatServiceImpl implements ICombatService {
     private final Random random;
 
@@ -58,6 +60,33 @@ public class CombatServiceImpl implements ICombatService {
         }
 
         return combat;
+    }
+
+    @Override
+    public void logCombatTurns(Combat combat) {
+        List<CombatTurn> turns = combat.getTurns();
+
+        log.info("----- Registro de combate -----");
+
+        for(CombatTurn turn : turns) {
+            log.info("\n");
+
+            log.info("Turno " + turn.getTurnNumber() + ":");
+            log.info("  Acción del jugador: " + turn.getPlayerAction().getTurnAction() +
+                    " - Resultado: " + turn.getPlayerAction().getTurnResult() +
+                    (turn.getPlayerAction().getTurnResult() != TurnResult.MISS ? " - Daño: " + turn.getPlayerAction().getDamage() : ""));
+            log.info("  Estado del jugador después del turno: HP=" + turn.getPlayerStateAfter().getHp() +
+                    ", Stamina=" + turn.getPlayerStateAfter().getStamina());
+            log.info("  Acción del enemigo: " + turn.getEnemyAction().getTurnAction() +
+                    " - Resultado: " + turn.getEnemyAction().getTurnResult() +
+                    (turn.getEnemyAction().getTurnResult() != TurnResult.MISS ? " - Daño: " + turn.getEnemyAction().getDamage() : ""));
+            log.info("  Estado del enemigo después del turno: HP=" + turn.getEnemyStateAfter().getHp() +
+                    ", Stamina=" + turn.getEnemyStateAfter().getStamina());
+
+            log.info("\n");
+        }
+
+        log.info("----- Fin del registro de combate -----");
     }
 
     private boolean noOneWins(Entity player, Entity enemy) {

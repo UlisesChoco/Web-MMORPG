@@ -1,10 +1,8 @@
 package com.chocolatada.combat.service.grpc;
 
 import com.chocolatada.combat.domain.Loot;
-import com.chocolatada.combat.grpc.Enemy;
-import com.chocolatada.combat.grpc.LootServiceGrpc;
-import com.chocolatada.combat.grpc.RollEnemyLootRequest;
-import com.chocolatada.combat.grpc.RollEnemyLootResponse;
+import com.chocolatada.combat.grpc.*;
+import com.chocolatada.combat.mapper.LootMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class LootStubClientServiceGrpcImpl {
     private final LootServiceGrpc.LootServiceBlockingStub lootStub;
 
-    public Loot roll(Enemy enemyGrpc) {
+    public LootGrpc roll(Enemy enemyGrpc) {
         RollEnemyLootRequest request = RollEnemyLootRequest.newBuilder()
                 .setEnemyId((int) enemyGrpc.getId())
                 .build();
@@ -25,9 +23,11 @@ public class LootStubClientServiceGrpcImpl {
         if(response.getDropped())
             itemId = response.getItemId();
 
-        return Loot.builder()
+        Loot loot = Loot.builder()
                 .gold(enemyGrpc.getGold())
                 .itemId(itemId)
                 .build();
+
+        return LootMapper.toLootGrpc(loot);
     }
 }

@@ -1,6 +1,7 @@
 package com.chocolatada.combat.service.jpa;
 
 import com.chocolatada.combat.dto.FatalCombatReplayDTO;
+import com.chocolatada.combat.entity.FatalCombatReplayEntity;
 
 import java.util.List;
 
@@ -10,4 +11,6 @@ public interface IFatalCombatReplayService {
     String getTurnLogByCombatHistoryId(Long combatHistoryId);
 
     List<FatalCombatReplayDTO> getRecentFatalities(int limit);
+
+    FatalCombatReplayEntity save(FatalCombatReplayEntity entity);
 }
