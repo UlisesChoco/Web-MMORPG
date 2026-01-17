@@ -1,9 +1,6 @@
 package com.chocolatada.combat.configuration;
 
-import com.chocolatada.combat.grpc.EnemyServiceGrpc;
-import com.chocolatada.combat.grpc.LootServiceGrpc;
-import com.chocolatada.combat.grpc.PlayerServiceGrpc;
-import com.chocolatada.combat.grpc.PlayerClassServiceGrpc;
+import com.chocolatada.combat.grpc.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +20,8 @@ public class GrpcClientConfiguration {
     private final String PLAYER_CLASS_SERVICE_ADDRESS = "localhost:9091";
 
     private final String LOOT_SERVICE_ADDRESS = "localhost:9094";
+
+    private final String INVENTORY_SERVICE_ADDRESS = "localhost:9093";
 
     @Bean
     EnemyServiceGrpc.EnemyServiceBlockingStub enemyStub() {
@@ -46,5 +45,11 @@ public class GrpcClientConfiguration {
     LootServiceGrpc.LootServiceBlockingStub lootStub() {
         return LootServiceGrpc
                 .newBlockingStub(channelFactory.createChannel(LOOT_SERVICE_ADDRESS));
+    }
+
+    @Bean
+    InventoryServiceGrpc.InventoryServiceBlockingStub inventoryStub() {
+        return InventoryServiceGrpc
+                .newBlockingStub(channelFactory.createChannel(INVENTORY_SERVICE_ADDRESS));
     }
 }

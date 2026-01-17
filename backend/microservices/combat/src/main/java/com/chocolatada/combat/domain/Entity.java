@@ -46,4 +46,19 @@ public class Entity {
         this.maxAccuracy = accuracy;
         this.maxEvasion = evasion;
     }
+
+    public void incrementStats(Entity other) {
+        this.hp += other.getHp();
+        this.atk += other.getAtk();
+        this.def += other.getDef();
+        this.stamina += other.getStamina();
+        this.accuracy += other.getAccuracy();
+        this.evasion += other.getEvasion();
+        this.critRate += other.getCritRate();
+        this.critDamage += other.getCritDamage();
+        this.maxHp += other.getHp();
+        this.maxStamina += other.getStamina();
+        this.maxAccuracy += other.getAccuracy();
+        this.maxEvasion += other.getEvasion();
+    }
 }

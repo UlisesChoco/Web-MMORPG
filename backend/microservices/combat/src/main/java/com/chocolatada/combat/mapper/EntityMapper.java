@@ -1,6 +1,7 @@
 package com.chocolatada.combat.mapper;
 
 import com.chocolatada.combat.domain.Entity;
+import com.chocolatada.combat.grpc.GetEquipmentStatBonusResponse;
 import com.chocolatada.combat.grpc.ScaledStats;
 import com.chocolatada.combat.grpc.Enemy;
 
@@ -28,6 +29,19 @@ public class EntityMapper {
                 .stamina(enemy.getStamina())
                 .accuracy(enemy.getAccuracy())
                 .evasion(enemy.getEvasion())
+                .build();
+    }
+
+    public static Entity toEntity(GetEquipmentStatBonusResponse response) {
+        return Entity.builder()
+                .critRate(response.getCritRate())
+                .critDamage(response.getCritDamage())
+                //.hp(response.getHp()) deberia haber hp. me olvide ponerla en el microservicio de inventory, lo agrego mas tared
+                .atk(response.getAtk())
+                .def(response.getDef())
+                .stamina(response.getStamina())
+                .accuracy(response.getAccuracy())
+                .evasion(response.getEvasion())
                 .build();
     }
 }

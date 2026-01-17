@@ -38,6 +38,8 @@ public class CombatServiceGrpcImpl extends CombatServiceGrpc.CombatServiceImplBa
 
     private final LootStubClientServiceGrpcImpl lootStubClientServiceGrpc;
 
+    private final InventoryStubClientServiceGrpcImpl inventoryStubClientServiceGrpc;
+
     private final ObjectMapper objectMapper;
 
     @Override
@@ -52,6 +54,8 @@ public class CombatServiceGrpcImpl extends CombatServiceGrpc.CombatServiceImplBa
             log.info("Procesando combate entre jugador de ID "+ playerId +" y enemigo de ID "+ enemyId);
 
             Entity player = playerStubClientServiceGrpc.getPlayer(playerId);
+            Entity equipmentStats = inventoryStubClientServiceGrpc.getEquipmentStatBonus(playerId);
+            player.incrementStats(equipmentStats);
 
             Enemy enemyGrpc = enemyStubClientServiceGrpc.getEnemy(enemyId);
             Entity enemy = EntityMapper.toEntity(enemyGrpc);
