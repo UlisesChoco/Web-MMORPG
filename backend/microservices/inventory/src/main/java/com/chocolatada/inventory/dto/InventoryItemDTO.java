@@ -26,6 +26,8 @@ public class InventoryItemDTO {
 
     private ItemSlot slot;
 
+    private Integer hpBonus;
+
     private Integer atkBonus;
 
     private Integer defBonus;

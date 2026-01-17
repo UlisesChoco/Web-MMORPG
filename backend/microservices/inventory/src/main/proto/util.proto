@@ -14,14 +14,15 @@ message Item {
   int64 required_level = 5;
   ItemType type = 6;
   SlotType slot = 7;
-  int64 atk_bonus = 8;
-  int64 def_bonus = 9;
-  int64 stamina_bonus = 10;
-  int64 accuracy_bonus = 11;
-  int64 evasion_bonus = 12;
-  float crit_rate_bonus = 13;
-  float crit_damage_bonus = 14;
-  bool equipped = 15;
+  int64 hp_bonus = 8;
+  int64 atk_bonus = 9;
+  int64 def_bonus = 10;
+  int64 stamina_bonus = 11;
+  int64 accuracy_bonus = 12;
+  int64 evasion_bonus = 13;
+  float crit_rate_bonus = 14;
+  float crit_damage_bonus = 15;
+  bool equipped = 16;
 }
 
 enum ItemType {

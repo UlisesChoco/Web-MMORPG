@@ -6,6 +6,7 @@ config:
       required-level: 1
       type: "WEAPON"
       slot: "MAIN_HAND"
+      hp-bonus: 0
       atk-bonus: 10
       def-bonus: 0
       stamina-bonus: -5
@@ -20,6 +21,7 @@ config:
       required-level: 2
       type: "ARMOR"
       slot: "CHEST"
+      hp-bonus: 10
       atk-bonus: 0
       def-bonus: 35
       stamina-bonus: -10

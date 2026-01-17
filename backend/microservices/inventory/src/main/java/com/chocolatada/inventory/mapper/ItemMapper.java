@@ -18,6 +18,7 @@ public class ItemMapper {
                 .requiredLevel(entity.getRequiredLevel())
                 .type(entity.getType())
                 .slot(entity.getSlot())
+                .hpBonus(entity.getHpBonus())
                 .atkBonus(entity.getAtkBonus())
                 .defBonus(entity.getDefBonus())
                 .staminaBonus(entity.getStaminaBonus())
@@ -47,6 +48,7 @@ public class ItemMapper {
                 .setRequiredLevel(dto.getRequiredLevel())
                 .setType(toProtoItemType(dto.getType()))
                 .setSlot(toProtoSlotType(dto.getSlot()))
+                .setHpBonus(dto.getHpBonus())
                 .setAtkBonus(dto.getAtkBonus())
                 .setDefBonus(dto.getDefBonus())
                 .setStaminaBonus(dto.getStaminaBonus())
@@ -123,6 +125,7 @@ public class ItemMapper {
         entity.setRequiredLevel(resource.getRequiredLevel());
         entity.setType(resource.getType());
         entity.setSlot(resource.getSlot());
+        entity.setHpBonus(resource.getHpBonus());
         entity.setAtkBonus(resource.getAtkBonus());
         entity.setDefBonus(resource.getDefBonus());
         entity.setStaminaBonus(resource.getStaminaBonus());

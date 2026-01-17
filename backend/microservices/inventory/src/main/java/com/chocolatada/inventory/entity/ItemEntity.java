@@ -38,6 +38,9 @@ public class ItemEntity {
     @Column(nullable = false)
     private ItemSlot slot;
 
+    @Column(name = "hp_bonus", nullable = false)
+    private Integer hpBonus;
+
     @Column(name = "atk_bonus", nullable = false)
     private Integer atkBonus;
 
