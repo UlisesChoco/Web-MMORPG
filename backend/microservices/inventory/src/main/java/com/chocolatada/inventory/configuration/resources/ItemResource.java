@@ -24,6 +24,8 @@ public class ItemResource {
 
     private ItemSlot slot;
 
+    private Integer hpBonus;
+
     private Integer atkBonus;
 
     private Integer defBonus;

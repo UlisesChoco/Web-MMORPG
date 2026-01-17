@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class EquipmentStatBonusDTO {
+    private Integer hp;
     private Integer atk;
     private Integer def;
     private Integer stamina;

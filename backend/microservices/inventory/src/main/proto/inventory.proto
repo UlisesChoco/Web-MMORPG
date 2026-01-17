@@ -66,13 +66,14 @@ message GetEquipmentStatBonusRequest {
 }
 
 message GetEquipmentStatBonusResponse {
-  int32 atk = 1;
-  int32 def = 2;
-  int32 stamina = 3;
-  int32 accuracy = 4;
-  int32 evasion = 5;
-  float crit_rate = 6;
-  float crit_damage = 7;
+  int32 hp = 1;
+  int32 atk = 2;
+  int32 def = 3;
+  int32 stamina = 4;
+  int32 accuracy = 5;
+  int32 evasion = 6;
+  float crit_rate = 7;
+  float crit_damage = 8;
 }
 
 service InventoryService {
