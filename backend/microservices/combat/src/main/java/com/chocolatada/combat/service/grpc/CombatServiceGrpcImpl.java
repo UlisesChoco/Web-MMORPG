@@ -92,6 +92,7 @@ public class CombatServiceGrpcImpl extends CombatServiceGrpc.CombatServiceImplBa
                 log.info("Combate procesado. El jugador fue asesinado. Replay del combate fatal guardada.");
             } else {
                 loot = lootStubClientServiceGrpc.roll(enemyGrpc);
+                inventoryStubClientServiceGrpc.addItemToInventory(playerId, loot.getItemId());
                 log.info("Combate procesado. El jugador sobrevivió. Botín generado.");
             }
 
