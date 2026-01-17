@@ -48,7 +48,7 @@ public class Entity {
     }
 
     public void incrementStats(Entity other) {
-        //this.hp += other.getHp(); esto mas adelante. todavia no puse la hp en los items
+        this.hp += other.getHp();
         this.atk += other.getAtk();
         this.def += other.getDef();
         this.stamina += other.getStamina();
@@ -56,7 +56,7 @@ public class Entity {
         this.evasion += other.getEvasion();
         this.critRate += other.getCritRate();
         this.critDamage += other.getCritDamage();
-        //this.maxHp += other.getHp();
+        this.maxHp += other.getHp();
         this.maxStamina += other.getStamina();
         this.maxAccuracy += other.getAccuracy();
         this.maxEvasion += other.getEvasion();
