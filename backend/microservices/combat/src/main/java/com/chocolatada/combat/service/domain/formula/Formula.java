@@ -66,7 +66,7 @@ public class Formula {
     }
 
     public static float calculateEffectiveCritRate(Entity entity) {
-        return entity.getCritRate() * calculateStaminaFactor(entity);
+        return (entity.getCritRate() / 100f) * calculateStaminaFactor(entity);
     }
 
     public static float calculateEffectiveCritDamage(Entity entity) {
