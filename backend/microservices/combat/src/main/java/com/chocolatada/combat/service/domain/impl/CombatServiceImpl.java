@@ -14,29 +14,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
-//esto lo tengo que refactorizar mas adelante
-//este service hace dos cosas; logica de combate y comunicacion grpc
-//deberia separar la comunicacion grpc a la capa superior grpc que use este service
 @Service
 @RequiredArgsConstructor
 public class CombatServiceImpl implements ICombatService {
-    private final EnemyServiceGrpc.EnemyServiceBlockingStub enemyStub;
-
-    private final PlayerServiceGrpc.PlayerServiceBlockingStub playerStub;
-
-    private final PlayerClassServiceGrpc.PlayerClassServiceBlockingStub playerClassStub;
-
-    private final LootServiceGrpc.LootServiceBlockingStub lootStub;
-
     private final Random random;
 
     @Override
-    public Combat processCombat(Long playerId, Long enemyId) throws StatusRuntimeException {
-        Enemy enemyGrpc = getEnemy(enemyId);
-
+    public Combat processCombat(Entity player, Entity enemy) throws StatusRuntimeException {
         Combat combat = new Combat();
-        Entity player = getPlayer(playerId);
-        Entity enemy = EntityMapper.toEntity(enemyGrpc);
 
         int turnCounter = 1;
         while(noOneWins(player, enemy)) {
@@ -64,83 +49,16 @@ public class CombatServiceImpl implements ICombatService {
 
         combat.setTotalTurns(turnCounter - 1);
 
-        if(playerWon(enemy)) {
+        if(playerWon(enemy))
             combat.setWasFatal(false);
-
-            RollEnemyLootRequest request = RollEnemyLootRequest.newBuilder()
-                    .setEnemyId((int) enemyGrpc.getId())
-                    .build();
-
-            RollEnemyLootResponse response = lootStub.rollEnemyLoot(request);
-
-            Long itemId = null;
-
-            if(response.getDropped())
-                itemId = response.getItemId();
-
-            Loot loot = Loot.builder()
-                    .gold(enemyGrpc.getGold())
-                    .itemId(itemId)
-                    .build();
-
-            combat.setLoot(loot);
-        }
 
         if(enemyWon(player)) {
             combat.setWasFatal(true);
             combat.setLoot(null);
-            MarkPlayerAsDeadRequest request = MarkPlayerAsDeadRequest.newBuilder()
-                    .setPlayerId(playerId)
-                    .build();
-            playerStub.markPlayerAsDead(request);
         }
 
         return combat;
     }
-
-    private Player getPlayerResponse(Long playerId) throws StatusRuntimeException {
-        GetPlayerByIdRequest request = com.chocolatada.combat.grpc.GetPlayerByIdRequest.newBuilder()
-                .setPlayerId(playerId)
-                .build();
-
-        return playerStub.getPlayerById(request).getPlayer();
-    }
-
-    private Entity getPlayer(Long playerId) throws StatusRuntimeException {
-        Player player = getPlayerResponse(playerId);
-        System.out.println("PLAYER: "+player);
-
-        BonusStats bonusStats = BonusStats.newBuilder()
-                .setHp(player.getHpBonus())
-                .setAtk(player.getAtkBonus())
-                .setDef(player.getDefBonus())
-                .setStamina(player.getStaminaBonus())
-                .setAccuracy(player.getAccuracyBonus())
-                .setEvasion(player.getEvasionBonus())
-                .build();
-
-        GetScaledClassStatsRequest request = GetScaledClassStatsRequest.newBuilder()
-                .setClassId(player.getClassId())
-                .setBonus(bonusStats)
-                .setLevel(player.getLevel())
-                .build();
-
-        System.out.println("REQUEST: "+request);
-
-        GetScaledClassStatsResponse response = playerClassStub.getScaledClassStats(request);
-        ScaledStats scaledStats = response.getScaledStats();
-
-        return EntityMapper.toEntity(scaledStats);
-    }
-
-    private Enemy getEnemy(Long enemyId) throws StatusRuntimeException {
-        GetEnemyByIdRequest request = GetEnemyByIdRequest.newBuilder()
-                .setEnemyId(enemyId)
-                .build();
-
-        return enemyStub.getEnemyById(request).getEnemy();
-    }
-
 
     private boolean noOneWins(Entity player, Entity enemy) {
         return player.getHp() > 0 && enemy.getHp() > 0;

@@ -1,8 +1,9 @@
 package com.chocolatada.combat.service.domain;
 
 import com.chocolatada.combat.domain.Combat;
+import com.chocolatada.combat.domain.Entity;
 import io.grpc.StatusRuntimeException;
 
 public interface ICombatService {
-    Combat processCombat(Long playerId, Long enemyId) throws StatusRuntimeException;
+    Combat processCombat(Entity player, Entity enemy) throws StatusRuntimeException;
 }
