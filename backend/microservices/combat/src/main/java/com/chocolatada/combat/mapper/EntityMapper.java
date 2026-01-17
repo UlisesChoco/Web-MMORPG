@@ -36,7 +36,7 @@ public class EntityMapper {
         return Entity.builder()
                 .critRate(response.getCritRate())
                 .critDamage(response.getCritDamage())
-                //.hp(response.getHp()) deberia haber hp. me olvide ponerla en el microservicio de inventory, lo agrego mas tared
+                .hp(response.getHp())
                 .atk(response.getAtk())
                 .def(response.getDef())
                 .stamina(response.getStamina())
