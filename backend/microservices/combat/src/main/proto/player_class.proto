@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package com.example.demo;
+package Class;
 
 option java_multiple_files = true;
 option java_package = "com.chocolatada.combat.grpc";

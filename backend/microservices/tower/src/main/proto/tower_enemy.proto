@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package com.chocolatada.tower;
+package Tower;
 
 option java_multiple_files = true;
 option java_package = "com.chocolatada.tower_enemy.grpc";

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package world;
+package World;
 
 option java_multiple_files = true;
 option java_package = "com.chocolatada.world.grpc";
