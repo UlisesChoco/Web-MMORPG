@@ -1,3 +1,5 @@
+import { HttpStatus } from "@nestjs/common";
+
 enum GrpcStatus {
     INVALID_ARGUMENT = 3,
     NOT_FOUND = 5,
@@ -5,16 +7,6 @@ enum GrpcStatus {
     PERMISSION_DENIED = 7,
     INTERNAL = 13,
     UNAUTHENTICATED = 16
-}
-
-enum HttpStatus {
-    BAD_REQUEST = 400,
-    UNAUTHORIZED = 401,
-    FORBIDDEN = 403,
-    NOT_FOUND = 404,
-    CONFLICT = 409,
-    SERVICE_UNAVAILABLE = 503,
-    INTERNAL_SERVER_ERROR = 500,
 }
 
 export class GrpcStatusCode {

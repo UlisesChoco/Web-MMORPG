@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Inject, OnModuleInit, Post, Res } from "@nestjs/common";
+import { Body, Controller, HttpCode, HttpStatus, Inject, OnModuleInit, Post, Res } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import type { ClientGrpc } from "@nestjs/microservices";
 import { LoginDTO } from "./dto/login.dto";
@@ -21,7 +21,7 @@ export class AuthController implements OnModuleInit {
     }
 
     @Post('login')
-    @HttpCode(200)
+    @HttpCode(HttpStatus.OK)
     async login(
         @Body() loginDTO: LoginDTO,
         @Res({ passthrough: true }) response: Response
@@ -60,7 +60,7 @@ export class AuthController implements OnModuleInit {
     }
 
     @Post('register')
-    @HttpCode(201) //this is a default value for nestjs, but i put it for more clarity
+    @HttpCode(HttpStatus.CREATED) //this is a default value for nestjs, but i put it for more clarity
     async register(
         @Body() registerDTO: RegisterDTO,
         @Res({ passthrough: true }) response: Response
