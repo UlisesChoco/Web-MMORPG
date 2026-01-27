@@ -1,9 +1,14 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { AuthMiddleware } from './auth/auth.middleware';
+import { PlayerClassModule } from './class/module/player-class.module';
+import { PlayerClassModifiersModule } from './class/module/player-class-modifiers.module';
 
 @Module({
-  imports: [AuthModule],
+  imports: [
+    AuthModule,
+    PlayerClassModule, PlayerClassModifiersModule
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
