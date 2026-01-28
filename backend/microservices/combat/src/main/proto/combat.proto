@@ -35,14 +35,16 @@ message ActionGrpc {
 }
 
 enum TurnActionGrpc {
-  BASIC_ATTACK = 0;
+  TURN_ACTION_UNSPECIFIED = 0;
+  BASIC_ATTACK = 1;
 }
 
 enum TurnResultGrpc {
-  HIT = 0;
-  MISS = 1;
-  CRITICAL_HIT = 2;
-  DODGE = 3;
+  TURN_RESULT_UNSPECIFIED = 0;
+  HIT = 1;
+  MISS = 2;
+  CRITICAL_HIT = 3;
+  DODGE = 4;
 }
 
 message StateGrpc {

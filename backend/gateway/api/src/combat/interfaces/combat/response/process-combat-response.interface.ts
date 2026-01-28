@@ -1,5 +1,5 @@
 export interface ProcessCombatResponse {
-    combatId: number;
+    combatId: Long;
     wasFatal: boolean;
     totalTurns: number;
     turns: Array<CombatTurnGrpc>;
@@ -17,29 +17,31 @@ export interface CombatTurnGrpc {
 export interface ActionGrpc {
     turnAction: TurnActionGrpc;
     turnResult: TurnResultGrpc;
-    damage: number;
+    damage: Long;
     critical: boolean;
 }
 
 export enum TurnActionGrpc {
-    BASIC_ATTACK = 0
+    TURN_ACTION_UNSPECIFIED = 0,
+    BASIC_ATTACK = 1
 }
 
 export enum TurnResultGrpc {
-    HIT = 0,
-    MISS = 1,
-    CRITICAL_HIT = 2,
-    DODGE = 3
+    TURN_RESULT_UNSPECIFIED = 0,
+    HIT = 1,
+    MISS = 2,
+    CRITICAL_HIT = 3,
+    DODGE = 4
 }
 
 export interface StateGrpc {
-    hp: number;
-    stamina: number;
-    accuracy: number;
-    evasion: number;
+    hp: Long;
+    stamina: Long;
+    accuracy: Long;
+    evasion: Long;
 }
 
 export interface LootGrpc {
     gold: number;
-    itemId: number | null;
+    itemId: Long | null;
 }
