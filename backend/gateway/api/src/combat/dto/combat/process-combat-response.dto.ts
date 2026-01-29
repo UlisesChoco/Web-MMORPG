@@ -1,4 +1,4 @@
-export class ProcessCombatResponseDTO {
+export interface ProcessCombatResponseDTO {
     combatId: number;
     wasFatal: boolean;
     totalTurns: number;
@@ -6,7 +6,7 @@ export class ProcessCombatResponseDTO {
     loot: LootGrpc;
 }
 
-export class CombatTurnGrpc {
+export interface CombatTurnGrpc {
     turnNumber: number;
     playerAction: ActionGrpc;
     enemyAction: ActionGrpc;
@@ -14,21 +14,21 @@ export class CombatTurnGrpc {
     enemyStateAfter: StateGrpc;
 }
 
-export class ActionGrpc {
+export interface ActionGrpc {
     turnAction: string;
     turnResult: string;
     damage: number;
     critical: boolean;
 }
 
-export class StateGrpc {
+export interface StateGrpc {
     hp: number;
     stamina: number;
     accuracy: number;
     evasion: number;
 }
 
-export class LootGrpc {
+export interface LootGrpc {
     gold: number;
-    itemId: number | undefined;
+    itemId: number;
 }

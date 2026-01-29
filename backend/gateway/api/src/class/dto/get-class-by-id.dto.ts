@@ -1,10 +1,10 @@
-export interface GetClassByIdResponse {
+export interface GetClassByIdDTO {
     message: string;
-    data: ClassData;
+    data: ClassDataDTO;
 }
 
-export interface ClassData {
-    id: Long;
+export interface ClassDataDTO {
+    id: number;
     name: string;
     description: string;
     critRate: number;

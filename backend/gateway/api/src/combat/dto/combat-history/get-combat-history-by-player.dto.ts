@@ -1,9 +1,9 @@
-export interface GetCombatHistoryByPlayerResponse {
+export interface GetCombatHistoryByPlayerDTO {
     combats: Array<CombatHistory>;
 }
 
 export interface CombatHistory {
-    enemyId: Long;
+    enemyId: number;
     wasFatal: boolean;
     date: string;
     totalTurns: number;

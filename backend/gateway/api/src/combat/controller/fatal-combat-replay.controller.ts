@@ -4,6 +4,7 @@ import type { ClientGrpc } from "@nestjs/microservices";
 import type { Response } from "express";
 import { Http } from "src/common/http/http.handle.response";
 import { firstValueFrom } from "rxjs";
+import { FatalCombatReplayMapper } from "../mapper/fatal-combat-replay.mapper";
 
 @Controller('fatal-combat-replay')
 export class FatalCombatReplayController implements OnModuleInit {
@@ -33,7 +34,7 @@ export class FatalCombatReplayController implements OnModuleInit {
 
             this.logger.log(`Obtenido replay de combate fatal con ID: ${params.id}`);
 
-            return data;
+            return FatalCombatReplayMapper.toGetFatalCombatReplayDTO(data);
         } catch (err) {
             this.logger.error(`Error al obtener replay de combate fatal con ID: ${params.id}: ${err}`);
 
@@ -58,7 +59,7 @@ export class FatalCombatReplayController implements OnModuleInit {
 
             this.logger.log(`Obtenidas ${params.limit} muertes recientes`);
 
-            return data;
+            return FatalCombatReplayMapper.toGetRecentFatalitiesDTO(data);
         } catch (err) {
             this.logger.error(`Error al obtener muertes recientes: ${err}`);
 

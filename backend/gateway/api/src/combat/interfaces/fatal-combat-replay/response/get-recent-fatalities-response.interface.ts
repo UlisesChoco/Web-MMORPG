@@ -3,7 +3,7 @@ export interface GetRecentFatalitiesResponse {
 }
 
 export interface FatalityEntry {
-    playerId: number;
-    enemyId: number;
+    playerId: Long;
+    enemyId: Long;
     date: string;
 }

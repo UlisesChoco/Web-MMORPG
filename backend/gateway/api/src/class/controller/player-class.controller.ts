@@ -4,6 +4,7 @@ import type { ClientGrpc } from "@nestjs/microservices";
 import { firstValueFrom } from "rxjs";
 import type { Response } from "express";
 import { Http } from "src/common/http/http.handle.response";
+import { PlayerClassMapper } from "../mapper/player-class.mapper";
 
 @Controller('player-class')
 export class PlayerClassController implements OnModuleInit {
@@ -33,7 +34,7 @@ export class PlayerClassController implements OnModuleInit {
 
             this.logger.log(`Devolviendo la clase con ID: ${params.id}`);
 
-            return data;
+            return PlayerClassMapper.toGetClassByIdDTO(data);
         } catch (err) {
             this.logger.error(`Error al obtener la clase con ID: ${params.id}`, err);
 
@@ -96,7 +97,7 @@ export class PlayerClassController implements OnModuleInit {
 
             this.logger.log('Devolviendo la lista de clases de jugador');
 
-            return data;
+            return PlayerClassMapper.toListClassesDTO(data);
         } catch (err) {
             this.logger.error('Error al listar las clases de jugador', err);
 

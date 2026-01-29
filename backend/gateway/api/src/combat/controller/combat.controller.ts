@@ -36,7 +36,7 @@ export class CombatController implements OnModuleInit {
 
             const data = await firstValueFrom(observable);
 
-            const finalData = CombatMapper.mapProcessCombatResponse(data);
+            const finalData = CombatMapper.toProcessCombatResponseDTO(data);
 
             this.logger.log(`Se procesó un combate entre el jugador ${dto.playerId} y el enemigo ${dto.enemyId}`);
 

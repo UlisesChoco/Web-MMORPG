@@ -1,11 +1,13 @@
-import { Long } from "@grpc/proto-loader";
-import { ProcessCombatResponseDTO } from "../dto/combat/process-combat-response.dto";
-import { TurnActionGrpc, TurnResultGrpc, type ProcessCombatResponse } from "../interfaces/combat/response/process-combat-response.interface";
 import { Util } from "src/common/util/number.functions";
+import { GetFatalCombatReplayDTO } from "../dto/fatal-combat-replay/get-fatal-combat-replay.dto";
+import { GetFatalCombatReplayResponse } from "../interfaces/fatal-combat-replay/response/get-fatal-combat-replay-response.interface";
+import { TurnActionGrpc, TurnResultGrpc } from "../interfaces/combat/response/process-combat-response.interface";
+import { GetRecentFatalitiesDTO } from "../dto/fatal-combat-replay/get-recent-fatalities.dto";
+import { GetRecentFatalitiesResponse } from "../interfaces/fatal-combat-replay/response/get-recent-fatalities-response.interface";
 
-export class CombatMapper {
-    static toProcessCombatResponseDTO(data: any): ProcessCombatResponseDTO {
-        const response = data as ProcessCombatResponse;
+export class FatalCombatReplayMapper {
+    static toGetFatalCombatReplayDTO(data: any): GetFatalCombatReplayDTO {
+        const response = data as GetFatalCombatReplayResponse;
 
         const turnsMapped = response.turns.map(turn => {
             return {
@@ -37,17 +39,28 @@ export class CombatMapper {
             };
         });
 
-        const mapped: ProcessCombatResponseDTO = {
-            combatId: Util.longToNumber(response.combatId),
-            wasFatal: response.wasFatal ?? false,
-            totalTurns: response.totalTurns,
-            turns: turnsMapped,
-            loot: {
-                gold: response.loot.gold ?? 0,
-                itemId: Util.longToNumber(response.loot.itemId),
-            },
+        const dto = {
+            turns: turnsMapped
         };
 
-        return mapped;
+        return dto;
+    }
+
+    static toGetRecentFatalitiesDTO(data: any): GetRecentFatalitiesDTO {
+        const response = data as GetRecentFatalitiesResponse;
+
+        const fatalitiesMapped = response.fatalities.map(fatality => {
+            return {
+                playerId: Util.longToNumber(fatality.playerId),
+                enemyId: Util.longToNumber(fatality.enemyId),
+                date: fatality.date,
+            }
+        });
+
+        const dto = {
+            fatalities: fatalitiesMapped
+        };
+
+        return dto;
     }
 }

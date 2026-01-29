@@ -4,6 +4,7 @@ import type { ClientGrpc } from "@nestjs/microservices";
 import type { Response } from "express";
 import { Http } from "src/common/http/http.handle.response";
 import { firstValueFrom } from "rxjs";
+import { CombatHistoryMapper } from "../mapper/combat-history.mapper";
 
 @Controller('combat-history')
 export class CombatHistoryController implements OnModuleInit {
@@ -33,7 +34,7 @@ export class CombatHistoryController implements OnModuleInit {
 
             this.logger.log(`Historial de combate obtenido para el jugador de ID ${params.id}`);
 
-            return data;
+            return CombatHistoryMapper.toGetCombatHistoryByPlayerDTO(data);
         } catch (err) {
             this.logger.error(`Error al obtener el historial de combate del jugador ${params.id}: ${err}`);
 
@@ -58,7 +59,7 @@ export class CombatHistoryController implements OnModuleInit {
 
             this.logger.log(`Obtenidos los ${params.limit} combates recientes`);
 
-            return data;
+            return CombatHistoryMapper.toGetRecentCombatsDTO(data);
         } catch (err) {
             this.logger.error(`Error al obtener los combates recientes: ${err}`);
 
@@ -83,7 +84,7 @@ export class CombatHistoryController implements OnModuleInit {
 
             this.logger.log(`Obtenido el conteo de victorias para el jugador de ID ${params.playerId}`);
 
-            return data;
+            return CombatHistoryMapper.toGetPlayerWinCountDTO(data);
         } catch (err) {
             this.logger.error(`Error al obtener el conteo de victorias del jugador ${params.playerId}: ${err}`);
 
