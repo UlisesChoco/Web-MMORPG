@@ -30,5 +30,6 @@ export class StateGrpc {
 
 export class LootGrpc {
     gold: number;
+    experience: number;
     itemId: number | undefined;
 }
