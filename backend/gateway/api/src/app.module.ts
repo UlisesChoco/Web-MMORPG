@@ -6,12 +6,15 @@ import { PlayerClassModifiersModule } from './class/module/player-class-modifier
 import { CombatModule } from './combat/module/combat.module';
 import { CombatHistoryModule } from './combat/module/combat-history.module';
 import { FatalCombatReplayModule } from './combat/module/fatal-combat-replay.module';
+import { InventoryModule } from './inventory/module/inventory.module';
+import { ItemModule } from './inventory/module/item.module';
 
 @Module({
   imports: [
     AuthModule,
     PlayerClassModule, PlayerClassModifiersModule,
     CombatModule, CombatHistoryModule, FatalCombatReplayModule,
+    InventoryModule, ItemModule
   ],
 })
 export class AppModule implements NestModule {
