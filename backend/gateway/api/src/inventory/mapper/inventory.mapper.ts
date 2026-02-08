@@ -57,6 +57,13 @@ export class InventoryMapper {
     static toGetEquippedItemsResponseDTO(data: any): GetEquippedItemsResponseDTO {
         const response = data as GetEquippedItemsResponse;
 
+        if(!response.items) {
+            return {
+                message: response.message,
+                items: [],
+            }
+        }
+
         const mapped = response.items.map(item => {
             return {
                 inventoryItemId: Util.longToNumber(item.inventoryItemId),
