@@ -18,6 +18,13 @@ export class InventoryMapper {
     static toGetPlayerInventoryResponseDTO(data: any): GetPlayerInventoryResponseDTO {
         const response = data as GetPlayerInventoryResponse;
 
+        if(!response.items) {
+            return {
+                message: response.message,
+                items: [],
+            }
+        }
+
         const mapped = response.items.map(item => {
             return {
                 inventoryItemId: Util.longToNumber(item.inventoryItemId),
