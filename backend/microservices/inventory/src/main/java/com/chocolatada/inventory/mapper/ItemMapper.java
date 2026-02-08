@@ -4,9 +4,12 @@ import com.chocolatada.inventory.dto.InventoryItemDTO;
 import com.chocolatada.inventory.entity.ItemEntity;
 import com.chocolatada.inventory.entity.ItemSlot;
 import com.chocolatada.inventory.entity.ItemType;
+import com.chocolatada.inventory.grpc.SlotType;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.chocolatada.inventory.grpc.SlotType.SLOT_TYPE_UNSPECIFIED;
 
 public class ItemMapper {
     public static InventoryItemDTO toInventoryItemDTO(ItemEntity entity) {
@@ -82,7 +85,7 @@ public class ItemMapper {
 
     public static com.chocolatada.inventory.grpc.SlotType toProtoSlotType(ItemSlot slot) {
         if (slot == null) {
-            return com.chocolatada.inventory.grpc.SlotType.NONE;
+            return SLOT_TYPE_UNSPECIFIED;
         }
         return switch (slot) {
             case HEAD -> com.chocolatada.inventory.grpc.SlotType.HEAD;
@@ -94,7 +97,7 @@ public class ItemMapper {
             case OFF_HAND -> com.chocolatada.inventory.grpc.SlotType.OFF_HAND;
             case RING -> com.chocolatada.inventory.grpc.SlotType.RING;
             case NECKLACE -> com.chocolatada.inventory.grpc.SlotType.NECKLACE;
-            case NONE -> com.chocolatada.inventory.grpc.SlotType.NONE;
+            default -> throw new IllegalStateException("ItemSlot inesperado: " + slot);
         };
     }
 
@@ -112,7 +115,7 @@ public class ItemMapper {
             case OFF_HAND -> ItemSlot.OFF_HAND;
             case RING -> ItemSlot.RING;
             case NECKLACE -> ItemSlot.NECKLACE;
-            case NONE -> ItemSlot.NONE;
+            case SLOT_TYPE_UNSPECIFIED -> ItemSlot.NONE;
             case UNRECOGNIZED -> ItemSlot.NONE;
         };
     }
