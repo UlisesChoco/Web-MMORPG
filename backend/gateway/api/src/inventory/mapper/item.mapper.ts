@@ -9,6 +9,13 @@ export class ItemMapper {
     static toGetItemsByRequiredLevelResponseDTO(data: any): GetItemsByRequiredLevelResponseDTO {
         const response = data as GetItemsByRequiredLevelResponse;
 
+        if(!response.items) {
+            return {
+                message: response.message,
+                items: [],
+            }
+        }
+
         const items = response.items.map(item => {
             return {
                 inventoryItemId: Util.longToNumber(item.inventoryItemId),
@@ -40,6 +47,13 @@ export class ItemMapper {
 
     static toGetItemsByRequiredLevelAndSlotResponseDTO(data: any): GetItemsByRequiredLevelAndSlotResponseDTO {
         const response = data as GetItemsByRequiredLevelAndSlotResponse;
+
+        if(!response.items) {
+            return {
+                message: response.message,
+                items: [],
+            }
+        }
 
         const items = response.items.map(item => {
             return {

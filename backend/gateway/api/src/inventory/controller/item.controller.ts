@@ -20,7 +20,7 @@ export class ItemController implements OnModuleInit {
     @Get('by-required-level/:requiredLevel/:onlyHigherThan')
     async getItemsByRequiredLevel(
         @Param() params: any,
-        @Res() response: Response
+        @Res({ passthrough: true }) response: Response
     ) {
         try {
             const request = {
@@ -47,7 +47,7 @@ export class ItemController implements OnModuleInit {
     @Get('by-required-level/:requiredLevel/:onlyHigherThan/:slot')
     async getItemsByRequiredLevelAndSlot(
         @Param() params: any,
-        @Res() response: Response
+        @Res({ passthrough: true }) response: Response
     ) {
         try {
             const request = {
